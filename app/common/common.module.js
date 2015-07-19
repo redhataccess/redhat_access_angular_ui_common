@@ -3,7 +3,8 @@
 /*global $ */
 angular.module('RedhatAccess.common', [
 	'RedhatAccess.ui-utils',
-	'jmdobry.angular-cache'
+	'jmdobry.angular-cache',
+	'RedhatAccessCommon.template'
 ]).config(function($angularCacheFactoryProvider) {
 
 }).constant('RESOURCE_TYPES', {

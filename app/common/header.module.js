@@ -1,3 +1,5 @@
 'use strict';
 /*global $ */
-angular.module('RedhatAccess.header', []);
+angular.module('RedhatAccess.header', [
+	'RedhatAccessCommon.template'
+	]);

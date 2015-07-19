@@ -11,7 +11,8 @@ angular.module('gettext').run(['gettextCatalog', function (gettextCatalog) {
 /*global $ */
 angular.module('RedhatAccess.common', [
 	'RedhatAccess.ui-utils',
-	'jmdobry.angular-cache'
+	'jmdobry.angular-cache',
+	'RedhatAccess.template'
 ]).config(["$angularCacheFactoryProvider", function($angularCacheFactoryProvider) {
 
 }]).constant('RESOURCE_TYPES', {
@@ -42,7 +43,9 @@ angular.module('RedhatAccess.common', [
 ]);
 'use strict';
 /*global $ */
-angular.module('RedhatAccess.header', []);
+angular.module('RedhatAccess.header', [
+	'RedhatAccess.template'
+	]);
 'use strict';
 /*jshint unused:vars */
 var app = angular.module('RedhatAccess.ui-utils', ['gettext']);

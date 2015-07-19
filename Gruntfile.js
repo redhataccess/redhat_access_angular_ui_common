@@ -331,8 +331,8 @@ module.exports = function (grunt) {
                     base: 'app'
                 },
                 src: ['<%= src.tpl.app %>'],
-                dest: '.tmp/templates/RedhatAccess.template.js',
-                module: 'RedhatAccess.template'
+                dest: '.tmp/templates/RedhatAccessCommon.template.js',
+                module: 'RedhatAccessCommon.template'
             }
         },
     });

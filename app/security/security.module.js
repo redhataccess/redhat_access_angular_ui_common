@@ -3,7 +3,7 @@
 /*jshint camelcase: false */
 angular.module('RedhatAccess.security', [
     'ui.bootstrap',
-    'RedhatAccess.template',
+    'RedhatAccessCommon.template',
     'ui.router',
     'RedhatAccess.common',
     'RedhatAccess.header'
