@@ -1,4 +1,4 @@
-/*! redhat_access_angular_ui_common - v1.0.0 - 2015-07-19
+/*! redhat_access_angular_ui_common - v1.0.2 - 2015-07-19
  * Copyright (c) 2015 ;
  * Licensed 
  */
@@ -12,7 +12,7 @@ angular.module('gettext').run(['gettextCatalog', function (gettextCatalog) {
 angular.module('RedhatAccess.common', [
 	'RedhatAccess.ui-utils',
 	'jmdobry.angular-cache',
-	'RedhatAccess.template'
+	'RedhatAccessCommon.template'
 ]).config(["$angularCacheFactoryProvider", function($angularCacheFactoryProvider) {
 
 }]).constant('RESOURCE_TYPES', {
@@ -44,7 +44,7 @@ angular.module('RedhatAccess.common', [
 'use strict';
 /*global $ */
 angular.module('RedhatAccess.header', [
-	'RedhatAccess.template'
+	'RedhatAccessCommon.template'
 	]);
 'use strict';
 /*jshint unused:vars */
@@ -370,7 +370,7 @@ app.directive('rhaResizable', [
 /*jshint camelcase: false */
 angular.module('RedhatAccess.security', [
     'ui.bootstrap',
-    'RedhatAccess.template',
+    'RedhatAccessCommon.template',
     'ui.router',
     'RedhatAccess.common',
     'RedhatAccess.header'
@@ -2342,7 +2342,7 @@ angular.module('RedhatAccess.security').factory('securityService', [
     }
 ]);
 
-angular.module('RedhatAccess.template', ['common/views/403.html', 'common/views/404.html', 'common/views/alert.html', 'common/views/chatButton.html', 'common/views/header.html', 'common/views/title.html', 'common/views/treenode.html', 'common/views/treeview-selector.html', 'security/views/login_form.html', 'security/views/login_status.html']);
+angular.module('RedhatAccessCommon.template', ['common/views/403.html', 'common/views/404.html', 'common/views/alert.html', 'common/views/chatButton.html', 'common/views/header.html', 'common/views/title.html', 'common/views/treenode.html', 'common/views/treeview-selector.html', 'security/views/login_form.html', 'security/views/login_status.html']);
 
 angular.module("common/views/403.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("common/views/403.html",
