@@ -18,7 +18,7 @@ angular.module('RedhatAccess.header').controller('TitleViewCtrl', [
             case 'caseView':
                 return gettextCatalog.getString('CASE {{caseNumber}}',{caseNumber:CaseService.kase.case_number});
             case 'newCase':
-                return gettextCatalog.getString('CREATE A NEW SUPPORT CASE');
+                return gettextCatalog.getString('OPEN A SUPPORT CASE');
             case 'logViewer':
                 return gettextCatalog.getString('Logs');
             case 'searchCase':
