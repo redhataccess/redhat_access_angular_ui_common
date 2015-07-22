@@ -1,4 +1,4 @@
-/*! redhat_access_angular_ui_common - v1.0.2 - 2015-07-19
+/*! redhat_access_angular_ui_common - v1.0.5 - 2015-07-22
  * Copyright (c) 2015 ;
  * Licensed 
  */
@@ -629,7 +629,7 @@ angular.module('RedhatAccess.header').controller('TitleViewCtrl', [
             case 'caseView':
                 return gettextCatalog.getString('CASE {{caseNumber}}',{caseNumber:CaseService.kase.case_number});
             case 'newCase':
-                return gettextCatalog.getString('CREATE A NEW SUPPORT CASE');
+                return gettextCatalog.getString('OPEN A SUPPORT CASE');
             case 'logViewer':
                 return gettextCatalog.getString('Logs');
             case 'searchCase':
@@ -2003,7 +2003,7 @@ angular.module('RedhatAccess.common').factory('udsService', [
                         return deferred.promise;
 
                     },
-                    delete: function(caseNumber) {
+                    remove: function(caseNumber) {
                         var deferred = $q.defer();
                         uds.releaselock(
                             function (response) {
