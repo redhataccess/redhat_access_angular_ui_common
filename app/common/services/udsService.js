@@ -314,7 +314,7 @@ angular.module('RedhatAccess.common').factory('udsService', [
                         return deferred.promise;
 
                     },
-                    delete: function(caseNumber) {
+                    remove: function(caseNumber) {
                         var deferred = $q.defer();
                         uds.releaselock(
                             function (response) {
