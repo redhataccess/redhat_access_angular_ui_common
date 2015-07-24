@@ -1,4 +1,4 @@
-/*! redhat_access_angular_ui_common - v1.0.5 - 2015-07-22
+/*! redhat_access_angular_ui_common - v1.0.5 - 2015-07-23
  * Copyright (c) 2015 ;
  * Licensed 
  */
@@ -712,6 +712,16 @@ angular.module('RedhatAccess.header').directive('rhaHeader', function () {
     };
 });
 
+'use strict';
+/*jshint unused:vars */
+angular.module('RedhatAccess.header').directive('rhaOnchange', function () {
+    return {
+        restrict: 'A',
+        link: function (scope, element, attrs) {
+            element.bind('change', element.scope()[attrs.rhaOnchange]);
+        }
+    };
+});
 'use strict';
 angular.module('RedhatAccess.header').directive('rhaTitletemplate', function () {
     return {
