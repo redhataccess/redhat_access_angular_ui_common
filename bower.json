@@ -1,8 +1,9 @@
 {
     "name": "redhat-access-angular-ui-common",
     "version": "1.0.5",
-    "main": "dist/redhat-access-angular-ui-common.js",
+    "main": "dist/redhat_access_angular_ui_common.js",
     "dependencies": {
-        "angular": "1.2.1"
+        "angular": "1.2.1",
+        "angular-gettext": "~2.0.0"
     }
 }
