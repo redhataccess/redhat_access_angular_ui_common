@@ -692,6 +692,20 @@ angular.module('RedhatAccess.common').factory('strataService', [
                             return deferred.promise;
                         }
                     }
+                },
+                businesshours: function(timezone){
+                    var deferred = $q.defer();
+                    if (!ie8 && strataCache.get('businesshours')) {
+                        deferred.resolve(strataCache.get('businesshours'));
+                    } else {
+                        strata.values.businesshours(timezone,function (response) {
+                            if (!ie8) {
+                                strataCache.put('businesshours', response);
+                            }
+                            deferred.resolve(response);
+                        }, angular.bind(deferred, errorHandler));
+                    }
+                    return deferred.promise;
                 }
             },
             users: {
