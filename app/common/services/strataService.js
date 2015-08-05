@@ -413,7 +413,7 @@ angular.module('RedhatAccess.common').factory('strataService', [
                         } else {
                             strata.cases.attachments.list(id, function (response) {
                                 angular.forEach(response , angular.bind(this, function (element) {
-                                    var modifiedDate=element.last_modified_date;
+                                    var modifiedDate=element.created_date;
                                     var lastModifiedDate=RHAUtils.convertToTimezone(element.last_modified_date);
                                     element.sortModifiedDate=modifiedDate;
                                     element.last_modified_date=RHAUtils.formatDate(lastModifiedDate,'MMM DD YYYY');
@@ -461,7 +461,7 @@ angular.module('RedhatAccess.common').factory('strataService', [
                             strata.cases.comments.get(id, function (response) {
                                 angular.forEach(response, angular.bind(this, function (comment) {
                                     var lastModifiedDate = RHAUtils.convertToTimezone(comment.last_modified_date);
-                                    var modifiedDate=comment.last_modified_date;
+                                    var modifiedDate=comment.created_date;
                                     comment.sortModifiedDate=modifiedDate;
                                     comment.last_modified_date = RHAUtils.formatDate(lastModifiedDate, 'MMM DD YYYY');
                                     comment.last_modified_time = RHAUtils.formatDate(lastModifiedDate, 'hh:mm A Z');
