@@ -1361,9 +1361,9 @@ angular.module('RedhatAccess.common').factory('strataService', [
                         } else {
                             strata.cases.attachments.list(id, function (response) {
                                 angular.forEach(response , angular.bind(this, function (element) {
-                                    var modifiedDate=element.created_date;
+                                    var sortCreatedDate=element.created_date;
+                                    element.sortModifiedDate=sortCreatedDate;
                                     var lastModifiedDate=RHAUtils.convertToTimezone(element.last_modified_date);
-                                    element.sortModifiedDate=modifiedDate;
                                     element.last_modified_date=RHAUtils.formatDate(lastModifiedDate,'MMM DD YYYY');
                                     element.last_modified_time=RHAUtils.formatDate(lastModifiedDate,'hh:mm A Z');
                                     var createdDate=RHAUtils.convertToTimezone(element.created_date);
@@ -1408,9 +1408,9 @@ angular.module('RedhatAccess.common').factory('strataService', [
                         } else {
                             strata.cases.comments.get(id, function (response) {
                                 angular.forEach(response, angular.bind(this, function (comment) {
+                                    var sortPublishedDate=comment.published_date;
+                                    comment.sortModifiedDate=sortPublishedDate;
                                     var lastModifiedDate = RHAUtils.convertToTimezone(comment.last_modified_date);
-                                    var modifiedDate=comment.published_date;
-                                    comment.sortModifiedDate=modifiedDate;
                                     comment.last_modified_date = RHAUtils.formatDate(lastModifiedDate, 'MMM DD YYYY');
                                     comment.last_modified_time = RHAUtils.formatDate(lastModifiedDate, 'hh:mm A Z');
                                     var createdDate = RHAUtils.convertToTimezone(comment.published_date);
