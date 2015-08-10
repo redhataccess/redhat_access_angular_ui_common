@@ -1,4 +1,4 @@
-/*! redhat_access_angular_ui_common - v1.0.5 - 2015-08-05
+/*! redhat_access_angular_ui_common - v1.0.5 - 2015-08-10
  * Copyright (c) 2015 ;
  * Licensed 
  */
@@ -1409,11 +1409,11 @@ angular.module('RedhatAccess.common').factory('strataService', [
                             strata.cases.comments.get(id, function (response) {
                                 angular.forEach(response, angular.bind(this, function (comment) {
                                     var lastModifiedDate = RHAUtils.convertToTimezone(comment.last_modified_date);
-                                    var modifiedDate=comment.created_date;
+                                    var modifiedDate=comment.published_date;
                                     comment.sortModifiedDate=modifiedDate;
                                     comment.last_modified_date = RHAUtils.formatDate(lastModifiedDate, 'MMM DD YYYY');
                                     comment.last_modified_time = RHAUtils.formatDate(lastModifiedDate, 'hh:mm A Z');
-                                    var createdDate = RHAUtils.convertToTimezone(comment.created_date);
+                                    var createdDate = RHAUtils.convertToTimezone(comment.published_date);
                                     comment.created_date = RHAUtils.formatDate(createdDate, 'MMM DD YYYY');
                                     comment.created_time = RHAUtils.formatDate(createdDate, 'hh:mm A Z');
                                 }));

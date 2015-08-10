@@ -461,11 +461,11 @@ angular.module('RedhatAccess.common').factory('strataService', [
                             strata.cases.comments.get(id, function (response) {
                                 angular.forEach(response, angular.bind(this, function (comment) {
                                     var lastModifiedDate = RHAUtils.convertToTimezone(comment.last_modified_date);
-                                    var modifiedDate=comment.created_date;
+                                    var modifiedDate=comment.published_date;
                                     comment.sortModifiedDate=modifiedDate;
                                     comment.last_modified_date = RHAUtils.formatDate(lastModifiedDate, 'MMM DD YYYY');
                                     comment.last_modified_time = RHAUtils.formatDate(lastModifiedDate, 'hh:mm A Z');
-                                    var createdDate = RHAUtils.convertToTimezone(comment.created_date);
+                                    var createdDate = RHAUtils.convertToTimezone(comment.published_date);
                                     comment.created_date = RHAUtils.formatDate(createdDate, 'MMM DD YYYY');
                                     comment.created_time = RHAUtils.formatDate(createdDate, 'hh:mm A Z');
                                 }));
