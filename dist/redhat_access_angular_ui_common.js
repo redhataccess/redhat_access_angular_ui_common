@@ -1,4 +1,4 @@
-/*! redhat_access_angular_ui_common - v1.0.5 - 2015-08-10
+/*! redhat_access_angular_ui_common - v1.0.5 - 2015-08-11
  * Copyright (c) 2015 ;
  * Licensed 
  */
@@ -1926,6 +1926,21 @@ angular.module('RedhatAccess.common').factory('udsService', [
                             },
                             caseNumber,
                             caseDetails
+                        );
+                        return deferred.promise;
+                    }
+                },
+                associates:{
+                    get:function(userId){
+                        var deferred = $q.defer();
+                        uds.fetchCaseAssociateDetails(
+                            function (response) {
+                                deferred.resolve(response);
+                            },
+                            function (error) {
+                                deferred.reject(error);
+                            },
+                            userId
                         );
                         return deferred.promise;
                     }
