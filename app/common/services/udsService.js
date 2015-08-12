@@ -217,6 +217,21 @@ angular.module('RedhatAccess.common').factory('udsService', [
                         return deferred.promise;
                     }
                 },
+                associates:{
+                    get:function(userId,roleName){
+                        var deferred = $q.defer();
+                        uds.fetchCaseAssociateDetails(
+                            function (response) {
+                                deferred.resolve(response);
+                            },
+                            function (error) {
+                                deferred.reject(error);
+                            },
+                            userId,roleName
+                        );
+                        return deferred.promise;
+                    }
+                },
                 comments: {
                     get: function (caseNumber) {
                         var deferred = $q.defer();
