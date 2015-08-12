@@ -218,7 +218,7 @@ angular.module('RedhatAccess.common').factory('udsService', [
                     }
                 },
                 associates:{
-                    get:function(userId){
+                    get:function(userId,roleName){
                         var deferred = $q.defer();
                         uds.fetchCaseAssociateDetails(
                             function (response) {
@@ -227,7 +227,7 @@ angular.module('RedhatAccess.common').factory('udsService', [
                             function (error) {
                                 deferred.reject(error);
                             },
-                            userId
+                            userId,roleName
                         );
                         return deferred.promise;
                     }
