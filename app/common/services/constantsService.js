@@ -61,7 +61,7 @@ angular.module('RedhatAccess.common').service('ConstantsService', [
             },
             {
                 ///this refers  in context of "sorting on Case Status (Z-A)"
-                name: gettextCatalog.getString('Case status (Z-A)'),
+                name: gettextCatalog.getString('Case Status (Z-A)'),
                 sortField: 'status',
                 sortOrder: 'DESC'
             }
