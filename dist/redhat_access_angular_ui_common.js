@@ -1,4 +1,4 @@
-/*! redhat_access_angular_ui_common - v1.0.5 - 2015-08-12
+/*! redhat_access_angular_ui_common - v1.0.5 - 2015-08-18
  * Copyright (c) 2015 ;
  * Licensed 
  */
@@ -881,7 +881,7 @@ angular.module('RedhatAccess.common').service('ConstantsService', [
             },
             {
                 ///this refers  in context of "sorting on Case Status (Z-A)"
-                name: gettextCatalog.getString('Case status (Z-A)'),
+                name: gettextCatalog.getString('Case Status (Z-A)'),
                 sortField: 'status',
                 sortOrder: 'DESC'
             }
