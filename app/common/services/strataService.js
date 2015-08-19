@@ -413,14 +413,17 @@ angular.module('RedhatAccess.common').factory('strataService', [
                         } else {
                             strata.cases.attachments.list(id, function (response) {
                                 angular.forEach(response , angular.bind(this, function (element) {
-                                    var sortCreatedDate=element.created_date;
-                                    element.sortModifiedDate=sortCreatedDate;
+                                    var sortPublishedDate=element.last_modified_date;
+                                    element.sortModifiedDate=sortPublishedDate;
                                     var lastModifiedDate=RHAUtils.convertToTimezone(element.last_modified_date);
                                     element.last_modified_date=RHAUtils.formatDate(lastModifiedDate,'MMM DD YYYY');
                                     element.last_modified_time=RHAUtils.formatDate(lastModifiedDate,'hh:mm A Z');
                                     var createdDate=RHAUtils.convertToTimezone(element.created_date);
                                     element.created_date=RHAUtils.formatDate(createdDate,'MMM DD YYYY');
                                     element.created_time=RHAUtils.formatDate(createdDate,'hh:mm A Z');
+                                    //for attachments the published date is the last modified date
+                                    element.published_date=element.last_modified_date;
+                                    element.published_time=element.last_modified_time;
 
                                 }));
                                 if (!ie8) {
@@ -462,12 +465,18 @@ angular.module('RedhatAccess.common').factory('strataService', [
                                 angular.forEach(response, angular.bind(this, function (comment) {
                                     var sortPublishedDate=comment.published_date;
                                     comment.sortModifiedDate=sortPublishedDate;
+
                                     var lastModifiedDate = RHAUtils.convertToTimezone(comment.last_modified_date);
                                     comment.last_modified_date = RHAUtils.formatDate(lastModifiedDate, 'MMM DD YYYY');
                                     comment.last_modified_time = RHAUtils.formatDate(lastModifiedDate, 'hh:mm A Z');
-                                    var createdDate = RHAUtils.convertToTimezone(comment.published_date);
+
+                                    var createdDate = RHAUtils.convertToTimezone(comment.created_date);
                                     comment.created_date = RHAUtils.formatDate(createdDate, 'MMM DD YYYY');
                                     comment.created_time = RHAUtils.formatDate(createdDate, 'hh:mm A Z');
+                                    //for comments use published date
+                                    var publishedDate = RHAUtils.convertToTimezone(comment.published_date);
+                                    comment.published_date = RHAUtils.formatDate(publishedDate, 'MMM DD YYYY');
+                                    comment.published_time = RHAUtils.formatDate(publishedDate, 'hh:mm A Z');
                                 }));
                                 if (!ie8) {
                                     strataCache.put('comments' + id, response);
