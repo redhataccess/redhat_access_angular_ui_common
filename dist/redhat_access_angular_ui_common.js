@@ -1,4 +1,4 @@
-/*! redhat_access_angular_ui_common - v1.0.5 - 2015-08-18
+/*! redhat_access_angular_ui_common - v1.0.5 - 2015-08-25
  * Copyright (c) 2015 ;
  * Licensed 
  */
@@ -1773,6 +1773,7 @@ angular.module('RedhatAccess.common').factory('udsService', [
                 kase.account.account_number = response.resource.account.resource.accountNumber;
                 kase.account.is_strategic = response.resource.account.resource.strategic;
                 kase.account.special_handling_required = response.resource.account.resource.specialHandlingRequired;
+                kase.account.has_TAM = response.resource.account.resource.hasTAM;
                 kase.attachments={};
                 kase.attachments=response.resource.fileAttachments;
 

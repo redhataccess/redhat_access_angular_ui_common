@@ -51,6 +51,7 @@ angular.module('RedhatAccess.common').factory('udsService', [
                 kase.account.account_number = response.resource.account.resource.accountNumber;
                 kase.account.is_strategic = response.resource.account.resource.strategic;
                 kase.account.special_handling_required = response.resource.account.resource.specialHandlingRequired;
+                kase.account.has_TAM = response.resource.account.resource.hasTAM;
                 kase.attachments={};
                 kase.attachments=response.resource.fileAttachments;
 
