@@ -1,4 +1,4 @@
-/*! redhat_access_angular_ui_common - v1.0.5 - 2015-08-25
+/*! redhat_access_angular_ui_common - v1.0.14 - 2015-08-27
  * Copyright (c) 2015 ;
  * Licensed 
  */
@@ -364,6 +364,21 @@ app.directive('rhaResizable', [
         };
     }
 ]);
+app.directive('rhaEnter', function() {
+    return {
+        restrict: 'A',
+        link: function(scope, element, attrs) {
+            element.bind("keypress", function(event) {
+                if(event.which === 13) {
+                    scope.$apply(function(){
+                        scope.$eval(attrs.rhaEnter, {'event': event});
+                    });
+                event.preventDefault();
+                }
+            });
+        }
+    };
+});
 
 'use strict';
 /*jshint unused:vars */
