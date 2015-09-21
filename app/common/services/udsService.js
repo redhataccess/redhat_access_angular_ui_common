@@ -231,6 +231,32 @@ angular.module('RedhatAccess.common').factory('udsService', [
                             userId,roleName
                         );
                         return deferred.promise;
+                    },
+                    post:function(caseId,userId,roleName)
+                    {
+                        var deferred = $q.defer();
+                        var jsonAssociates=
+                        {
+                            "resource": {
+                                "associate": {
+                                    "externalModelId": userId
+
+                                },
+                                "role": roleName
+                            }
+
+                        }
+                        uds.addAssociates(
+                            function (response) {
+                                deferred.resolve(response);
+                            },
+                            function (error) {
+                                deferred.reject(error);
+                            },
+                            caseId,
+                            jsonAssociates
+                        );
+                        return deferred.promise;
                     }
                 },
                 comments: {
