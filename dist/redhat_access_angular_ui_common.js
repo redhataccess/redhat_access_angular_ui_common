@@ -1,4 +1,4 @@
-/*! redhat_access_angular_ui_common - v1.0.14 - 2015-09-21
+/*! redhat_access_angular_ui_common - v1.0.15 - 2015-10-06
  * Copyright (c) 2015 ;
  * Licensed 
  */
@@ -1376,9 +1376,8 @@ angular.module('RedhatAccess.common').factory('strataService', [
                         } else {
                             strata.cases.attachments.list(id, function (response) {
                                 angular.forEach(response , angular.bind(this, function (element) {
-                                    var sortPublishedDate=element.last_modified_date;
-                                    element.sortModifiedDate=sortPublishedDate;
                                     var lastModifiedDate=RHAUtils.convertToTimezone(element.last_modified_date);
+                                    element.sortModifiedDate=RHAUtils.formatDate(lastModifiedDate,'MMM DD YYYY hh:mm');
                                     element.last_modified_date=RHAUtils.formatDate(lastModifiedDate,'MMM DD YYYY');
                                     element.last_modified_time=RHAUtils.formatDate(lastModifiedDate,'hh:mm A Z');
                                     var createdDate=RHAUtils.convertToTimezone(element.created_date);
@@ -1438,6 +1437,7 @@ angular.module('RedhatAccess.common').factory('strataService', [
                                     comment.created_time = RHAUtils.formatDate(createdDate, 'hh:mm A Z');
                                     //for comments use published date
                                     var publishedDate = RHAUtils.convertToTimezone(comment.published_date);
+                                    comment.sortModifiedDate=RHAUtils.formatDate(publishedDate,'MMM DD YYYY hh:mm');
                                     comment.published_date = RHAUtils.formatDate(publishedDate, 'MMM DD YYYY');
                                     comment.published_time = RHAUtils.formatDate(publishedDate, 'hh:mm A Z');
                                 }));
@@ -1509,8 +1509,8 @@ angular.module('RedhatAccess.common').factory('strataService', [
                             var tzDate=RHAUtils.convertToTimezone(response.created_date);
                             response.created_date=RHAUtils.formatDate(tzDate,'MMM DD YYYY hh:mm:ss A Z');
                             angular.forEach(response.chats.chat, angular.bind(this, function (chat) {
-                                chat.sortModifiedDate=chat.start_time;
                                 var lastModifiedDate=RHAUtils.convertToTimezone(chat.start_time);
+                                chat.sortModifiedDate=RHAUtils.formatDate(lastModifiedDate,'MMM DD YYYY hh:mm');
                                 chat.start_date=RHAUtils.formatDate(lastModifiedDate,'MMM DD YYYY');
                                 chat.start_time=RHAUtils.formatDate(lastModifiedDate,'hh:mm:ss A Z');
                             }));
