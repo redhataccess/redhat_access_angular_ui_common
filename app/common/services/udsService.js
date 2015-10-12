@@ -409,6 +409,40 @@ angular.module('RedhatAccess.common').factory('udsService', [
                     );
                     return deferred.promise;
                 }
+            },
+            cqi: {
+                questions: {
+                    get: function(caseNumber){
+                        var deferred = $q.defer();
+                        uds.getCQIQuestions(
+                            function (response) {
+                                deferred.resolve(response);
+                            },
+                            function (error) {
+                                deferred.reject(error);
+                            },
+                            caseNumber
+                        );
+                        return deferred.promise;
+
+                    }
+                },
+                score: {
+                    put : function(caseNumber,reviewData){
+                        var deferred = $q.defer();
+                        uds.postCQIScore(
+                            function (response) {
+                                deferred.resolve(response);
+                            },
+                            function (error) {
+                                deferred.reject(error);
+                            },
+                            caseNumber,
+                            reviewData
+                        );
+                        return deferred.promise;
+                    }
+                }
             }
         };
         return service;
