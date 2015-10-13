@@ -1,4 +1,4 @@
-/*! redhat_access_angular_ui_common - v1.0.15 - 2015-10-06
+/*! redhat_access_angular_ui_common - v1.0.17 - 2015-10-13
  * Copyright (c) 2015 ;
  * Licensed 
  */
@@ -2171,6 +2171,40 @@ angular.module('RedhatAccess.common').factory('udsService', [
                         ssoUsername
                     );
                     return deferred.promise;
+                }
+            },
+            cqi: {
+                questions: {
+                    get: function(caseNumber){
+                        var deferred = $q.defer();
+                        uds.getCQIQuestions(
+                            function (response) {
+                                deferred.resolve(response);
+                            },
+                            function (error) {
+                                deferred.reject(error);
+                            },
+                            caseNumber
+                        );
+                        return deferred.promise;
+
+                    }
+                },
+                score: {
+                    put : function(caseNumber,reviewData){
+                        var deferred = $q.defer();
+                        uds.postCQIScore(
+                            function (response) {
+                                deferred.resolve(response);
+                            },
+                            function (error) {
+                                deferred.reject(error);
+                            },
+                            caseNumber,
+                            reviewData
+                        );
+                        return deferred.promise;
+                    }
                 }
             }
         };
