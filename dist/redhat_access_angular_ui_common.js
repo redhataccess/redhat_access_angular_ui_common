@@ -2218,7 +2218,7 @@ angular.module('RedhatAccess.common').factory('udsService', [
                                     response=mapResponseObject(false,false,false,false,true,response);
                                 } else {
                                     response=[];
-                                    deferred.reject("Unable to find case.");
+                                    deferred.reject("Unable to find solution.");
                                 }
                                 deferred.resolve(response);
                             },
