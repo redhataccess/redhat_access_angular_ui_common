@@ -1,4 +1,4 @@
-/*! redhat_access_angular_ui_common - v1.0.17 - 2015-10-13
+/*! redhat_access_angular_ui_common - v1.0.18 - 2015-10-13
  * Copyright (c) 2015 ;
  * Licensed 
  */
@@ -1879,6 +1879,7 @@ angular.module('RedhatAccess.common').factory('udsService', [
                 return user;
             } else if(isSolution == true) {
                 var solutions = {};
+                solutions = response;
                 return solutions;
             }
         };
@@ -2206,7 +2207,65 @@ angular.module('RedhatAccess.common').factory('udsService', [
                         return deferred.promise;
                     }
                 }
+            },
+            solution: {
+                details:{
+                    get: function(solutionNumber){
+                        var deferred = $q.defer();
+                        uds.getSolutionDetails(
+                            function (response) {
+                                if (response.resource !== undefined) {
+                                    response=mapResponseObject(false,false,false,false,true,response);
+                                } else {
+                                    response=[];
+                                    deferred.reject("Unable to find case.");
+                                }
+                                deferred.resolve(response);
+                            },
+                            function (error) {
+                                deferred.reject(error);
+                            },
+                            solutionNumber
+                        );
+                        return deferred.promise;
+                    }
+                },
+                sqi: {
+                    questions: {
+                        get: function(solutionNumber){
+                            var deferred = $q.defer();
+                            uds.getSQIQuestions(
+                                function (response) {
+                                    deferred.resolve(response);
+                                },
+                                function (error) {
+                                    deferred.reject(error);
+                                },
+                                solutionNumber
+                            );
+                            return deferred.promise;
+
+                        }
+                    },
+                    score: {
+                        put : function(solutionNumber,reviewData){
+                            var deferred = $q.defer();
+                            uds.postSQIScore(
+                                function (response) {
+                                    deferred.resolve(response);
+                                },
+                                function (error) {
+                                    deferred.reject(error);
+                                },
+                                solutionNumber,
+                                reviewData
+                            );
+                            return deferred.promise;
+                        }
+                    }
+                }
             }
+            
         };
         return service;
     }
