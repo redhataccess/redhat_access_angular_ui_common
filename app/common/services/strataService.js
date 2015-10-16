@@ -159,7 +159,7 @@ angular.module('RedhatAccess.common').factory('strataService', [
                         });
                     }
                     return deferred.promise;
-                }, 
+                },
                 search: function(searchString, max){
                     var deferred = $q.defer();
                     strata.search(
@@ -168,7 +168,7 @@ angular.module('RedhatAccess.common').factory('strataService', [
                             if (entries !== undefined) {
                                 deferred.resolve(entries);
                             }
-                            
+
                         },
                         angular.bind(deferred, errorHandler),
                         max,
@@ -409,12 +409,19 @@ angular.module('RedhatAccess.common').factory('strataService', [
                     list: function (id) {
                         var deferred = $q.defer();
                         if (!ie8 && strataCache.get('attachments' + id)) {
-                            deferred.resolve(strataCache.get('attachments' + id));
+                            //Changing cache response. Making sortModifiedDate as Date before sending
+                            var attachmentResponse=strataCache.get('attachments' + id);
+                            angular.forEach(attachmentResponse, angular.bind(this, function (attachment) {
+                                attachment.sortModifiedDate=new Date(attachment.sortModifiedDate);
+                            }));
+
+                            deferred.resolve(attachmentResponse);
                         } else {
                             strata.cases.attachments.list(id, function (response) {
                                 angular.forEach(response , angular.bind(this, function (element) {
+                                    var sortPublishedDate=element.last_modified_date;
+                                    element.sortModifiedDate=sortPublishedDate;
                                     var lastModifiedDate=RHAUtils.convertToTimezone(element.last_modified_date);
-                                    element.sortModifiedDate=RHAUtils.formatDate(lastModifiedDate,'MMM DD YYYY hh:mm');
                                     element.last_modified_date=RHAUtils.formatDate(lastModifiedDate,'MMM DD YYYY');
                                     element.last_modified_time=RHAUtils.formatDate(lastModifiedDate,'hh:mm A Z');
                                     var createdDate=RHAUtils.convertToTimezone(element.created_date);
@@ -458,7 +465,13 @@ angular.module('RedhatAccess.common').factory('strataService', [
                     get: function (id) {
                         var deferred = $q.defer();
                         if (!ie8 && strataCache.get('comments' + id)) {
-                            deferred.resolve(strataCache.get('comments' + id));
+                            //Changing cache response. Making sortModifiedDate as Date before sending
+                            var commentResponse=strataCache.get('comments' + id);
+                            angular.forEach(commentResponse, angular.bind(this, function (comment) {
+                                comment.sortModifiedDate=new Date(comment.sortModifiedDate);
+                            }));
+
+                            deferred.resolve(commentResponse);
                         } else {
                             strata.cases.comments.get(id, function (response) {
                                 angular.forEach(response, angular.bind(this, function (comment) {
@@ -474,7 +487,6 @@ angular.module('RedhatAccess.common').factory('strataService', [
                                     comment.created_time = RHAUtils.formatDate(createdDate, 'hh:mm A Z');
                                     //for comments use published date
                                     var publishedDate = RHAUtils.convertToTimezone(comment.published_date);
-                                    comment.sortModifiedDate=RHAUtils.formatDate(publishedDate,'MMM DD YYYY hh:mm');
                                     comment.published_date = RHAUtils.formatDate(publishedDate, 'MMM DD YYYY');
                                     comment.published_time = RHAUtils.formatDate(publishedDate, 'hh:mm A Z');
                                 }));
@@ -536,8 +548,14 @@ angular.module('RedhatAccess.common').factory('strataService', [
                 get: function (id) {
                     var deferred = $q.defer();
                     if (!ie8 && strataCache.get('case' + id)) {
+                        //Changing cache response. Making sortModifiedDate as Date before sending
+                        var caseChatsResponse=strataCache.get('case' + id);
+                        angular.forEach(caseChatsResponse.chats.chat, angular.bind(this, function (chat) {
+                            chat.sortModifiedDate=new Date(chat.sortModifiedDate);
+                        }));
+
                         deferred.resolve([
-                            strataCache.get('case' + id),
+                            caseChatsResponse,
                             true
                         ]);
                     } else {
@@ -546,8 +564,8 @@ angular.module('RedhatAccess.common').factory('strataService', [
                             var tzDate=RHAUtils.convertToTimezone(response.created_date);
                             response.created_date=RHAUtils.formatDate(tzDate,'MMM DD YYYY hh:mm:ss A Z');
                             angular.forEach(response.chats.chat, angular.bind(this, function (chat) {
+                                chat.sortModifiedDate=chat.start_time;
                                 var lastModifiedDate=RHAUtils.convertToTimezone(chat.start_time);
-                                chat.sortModifiedDate=RHAUtils.formatDate(lastModifiedDate,'MMM DD YYYY hh:mm');
                                 chat.start_date=RHAUtils.formatDate(lastModifiedDate,'MMM DD YYYY');
                                 chat.start_time=RHAUtils.formatDate(lastModifiedDate,'hh:mm:ss A Z');
                             }));
