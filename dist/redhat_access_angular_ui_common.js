@@ -1,4 +1,4 @@
-/*! redhat_access_angular_ui_common - v1.0.19 - 2015-10-20
+/*! redhat_access_angular_ui_common - v1.0.20 - 2015-10-20
  * Copyright (c) 2015 ;
  * Licensed 
  */
@@ -2040,7 +2040,7 @@ angular.module('RedhatAccess.common').factory('udsService', [
                         return deferred.promise;
                     },
                     post: {
-                        private: function (caseNumber, commentText) {
+                        private: function (caseNumber, commentText, hoursWorked) {
                             var deferred = $q.defer();
                             uds.postPrivateComments(
                                 function (response) {
@@ -2050,41 +2050,26 @@ angular.module('RedhatAccess.common').factory('udsService', [
                                     deferred.reject(error);
                                 },
                                 caseNumber,
-                                commentText
+                                commentText,
+                                hoursWorked
 
                             );
                             return deferred.promise;
                         },
-                        public: function (caseNumber, commentText,hoursWorked) {
+                        public: function (caseNumber, commentText, hoursWorked) {
                             var deferred = $q.defer();
 
-                            if(hoursWorked===undefined)
-                            {
-                                uds.postPublicComments(
-                                    function (response) {
-                                        deferred.resolve(response);
-                                    },
-                                    function (error) {
-                                        deferred.reject(error);
-                                    },
-                                    caseNumber,
-                                    commentText
-
-                                );
-                            } else
-                            {
-                                uds.postPublicCommentsWithHours(
-                                    function (response) {
-                                        deferred.resolve(response);
-                                    },
-                                    function (error) {
-                                        deferred.reject(error);
-                                    },
-                                    caseNumber,
-                                    commentText,
-                                    hoursWorked
-                                );
-                            }
+                            uds.postPublicComments(
+                                function (response) {
+                                    deferred.resolve(response);
+                                },
+                                function (error) {
+                                    deferred.reject(error);
+                                },
+                                caseNumber,
+                                commentText,
+                                hoursWorked
+                            );
 
                             return deferred.promise;
                         }
