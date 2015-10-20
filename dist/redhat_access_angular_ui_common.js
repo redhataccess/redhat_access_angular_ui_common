@@ -1,4 +1,4 @@
-/*! redhat_access_angular_ui_common - v1.0.19 - 2015-10-16
+/*! redhat_access_angular_ui_common - v1.0.19 - 2015-10-20
  * Copyright (c) 2015 ;
  * Licensed 
  */
@@ -2055,19 +2055,37 @@ angular.module('RedhatAccess.common').factory('udsService', [
                             );
                             return deferred.promise;
                         },
-                        public: function (caseNumber, commentText) {
+                        public: function (caseNumber, commentText,hoursWorked) {
                             var deferred = $q.defer();
-                            uds.postPublicComments(
-                                function (response) {
-                                    deferred.resolve(response);
-                                },
-                                function (error) {
-                                    deferred.reject(error);
-                                },
-                                caseNumber,
-                                commentText
 
-                            );
+                            if(hoursWorked===undefined)
+                            {
+                                uds.postPublicComments(
+                                    function (response) {
+                                        deferred.resolve(response);
+                                    },
+                                    function (error) {
+                                        deferred.reject(error);
+                                    },
+                                    caseNumber,
+                                    commentText
+
+                                );
+                            } else
+                            {
+                                uds.postPublicCommentsWithHours(
+                                    function (response) {
+                                        deferred.resolve(response);
+                                    },
+                                    function (error) {
+                                        deferred.reject(error);
+                                    },
+                                    caseNumber,
+                                    commentText,
+                                    hoursWorked
+                                );
+                            }
+
                             return deferred.promise;
                         }
                     }

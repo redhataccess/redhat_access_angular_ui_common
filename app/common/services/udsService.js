@@ -300,19 +300,37 @@ angular.module('RedhatAccess.common').factory('udsService', [
                             );
                             return deferred.promise;
                         },
-                        public: function (caseNumber, commentText) {
+                        public: function (caseNumber, commentText,hoursWorked) {
                             var deferred = $q.defer();
-                            uds.postPublicComments(
-                                function (response) {
-                                    deferred.resolve(response);
-                                },
-                                function (error) {
-                                    deferred.reject(error);
-                                },
-                                caseNumber,
-                                commentText
 
-                            );
+                            if(hoursWorked===undefined)
+                            {
+                                uds.postPublicComments(
+                                    function (response) {
+                                        deferred.resolve(response);
+                                    },
+                                    function (error) {
+                                        deferred.reject(error);
+                                    },
+                                    caseNumber,
+                                    commentText
+
+                                );
+                            } else
+                            {
+                                uds.postPublicCommentsWithHours(
+                                    function (response) {
+                                        deferred.resolve(response);
+                                    },
+                                    function (error) {
+                                        deferred.reject(error);
+                                    },
+                                    caseNumber,
+                                    commentText,
+                                    hoursWorked
+                                );
+                            }
+
                             return deferred.promise;
                         }
                     }
