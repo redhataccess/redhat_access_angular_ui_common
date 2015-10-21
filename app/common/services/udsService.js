@@ -285,7 +285,7 @@ angular.module('RedhatAccess.common').factory('udsService', [
                         return deferred.promise;
                     },
                     post: {
-                        private: function (caseNumber, commentText) {
+                        private: function (caseNumber, commentText, hoursWorked) {
                             var deferred = $q.defer();
                             uds.postPrivateComments(
                                 function (response) {
@@ -295,13 +295,15 @@ angular.module('RedhatAccess.common').factory('udsService', [
                                     deferred.reject(error);
                                 },
                                 caseNumber,
-                                commentText
+                                commentText,
+                                hoursWorked
 
                             );
                             return deferred.promise;
                         },
-                        public: function (caseNumber, commentText) {
+                        public: function (caseNumber, commentText, hoursWorked) {
                             var deferred = $q.defer();
+
                             uds.postPublicComments(
                                 function (response) {
                                     deferred.resolve(response);
@@ -310,9 +312,10 @@ angular.module('RedhatAccess.common').factory('udsService', [
                                     deferred.reject(error);
                                 },
                                 caseNumber,
-                                commentText
-
+                                commentText,
+                                hoursWorked
                             );
+
                             return deferred.promise;
                         }
                     }
