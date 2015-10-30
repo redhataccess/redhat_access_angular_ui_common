@@ -1,4 +1,4 @@
-/*! redhat_access_angular_ui_common - v1.0.20 - 2015-10-20
+/*! redhat_access_angular_ui_common - v1.0.21 - 2015-10-30
  * Copyright (c) 2015 ;
  * Licensed 
  */
@@ -2168,7 +2168,7 @@ angular.module('RedhatAccess.common').factory('udsService', [
                 }
             },
             user:{
-                get:function(uql){
+                get:function(uql,resourceProjection){
                     var deferred = $q.defer();
                     uds.fetchUser(
                         function (response) {
@@ -2177,7 +2177,8 @@ angular.module('RedhatAccess.common').factory('udsService', [
                         function (error) {
                             deferred.reject(error);
                         },
-                        uql
+                        uql,
+                        resourceProjection
                     );
                     return deferred.promise
                 },
@@ -2285,8 +2286,34 @@ angular.module('RedhatAccess.common').factory('udsService', [
                         }
                     }
                 }
+            },
+            sbr: {
+                list: function() {
+                    var deferred = $q.defer();
+                    uds.getSbrList(
+                        function (response) {
+                            deferred.resolve(response);
+                        },
+                        function (error) {
+                            deferred.reject(error);
+                        }
+                    );
+                    return deferred.promise;
+                },
+                details:function(sbrName) {
+                    var deferred = $q.defer();
+                    uds.getSbrDetails(
+                        function (response) {
+                            deferred.resolve(response);
+                        },
+                        function (error) {
+                            deferred.reject(error);
+                        },
+                        sbrName
+                    );
+                    return deferred.promise;
+                }
             }
-            
         };
         return service;
     }

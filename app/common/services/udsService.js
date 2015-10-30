@@ -413,7 +413,7 @@ angular.module('RedhatAccess.common').factory('udsService', [
                 }
             },
             user:{
-                get:function(uql){
+                get:function(uql,resourceProjection){
                     var deferred = $q.defer();
                     uds.fetchUser(
                         function (response) {
@@ -422,7 +422,8 @@ angular.module('RedhatAccess.common').factory('udsService', [
                         function (error) {
                             deferred.reject(error);
                         },
-                        uql
+                        uql,
+                        resourceProjection
                     );
                     return deferred.promise
                 },
@@ -530,8 +531,34 @@ angular.module('RedhatAccess.common').factory('udsService', [
                         }
                     }
                 }
+            },
+            sbr: {
+                list: function() {
+                    var deferred = $q.defer();
+                    uds.getSbrList(
+                        function (response) {
+                            deferred.resolve(response);
+                        },
+                        function (error) {
+                            deferred.reject(error);
+                        }
+                    );
+                    return deferred.promise;
+                },
+                details:function(sbrName) {
+                    var deferred = $q.defer();
+                    uds.getSbrDetails(
+                        function (response) {
+                            deferred.resolve(response);
+                        },
+                        function (error) {
+                            deferred.reject(error);
+                        },
+                        sbrName
+                    );
+                    return deferred.promise;
+                }
             }
-            
         };
         return service;
     }
