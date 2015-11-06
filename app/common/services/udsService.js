@@ -533,7 +533,7 @@ angular.module('RedhatAccess.common').factory('udsService', [
                 }
             },
             sbr: {
-                list: function() {
+                list: function(resourceProjection, query) {
                     var deferred = $q.defer();
                     uds.getSbrList(
                         function (response) {
@@ -541,7 +541,9 @@ angular.module('RedhatAccess.common').factory('udsService', [
                         },
                         function (error) {
                             deferred.reject(error);
-                        }
+                        },
+                        resourceProjection,
+                        query
                     );
                     return deferred.promise;
                 },
@@ -557,6 +559,112 @@ angular.module('RedhatAccess.common').factory('udsService', [
                         sbrName
                     );
                     return deferred.promise;
+                },
+                removeUserSbr: function(userId,query){
+                    var deferred = $q.defer();
+                    uds.removeUserSbr(
+                        function (response) {
+                            deferred.resolve(response);
+                        },
+                        function (error) {
+                            deferred.reject(error);
+                        },
+                        userId,
+                        query
+                    );
+                    return deferred.promise;
+                },
+                user: {
+                    put: function(userId, uql, data){
+                        var deferred = $q.defer();
+                        uds.postAddUsersToSBR(
+                            function (response) {
+                                deferred.resolve(response);
+                            },
+                            function (error) {
+                                deferred.reject(error);
+                            },
+                            userId,
+                            uql,
+                            data
+                        );
+                        return deferred.promise;
+                    }
+                }
+            },
+            roles: {
+                list: function(query) {
+                    var deferred = $q.defer();
+                    uds.getRoleList(
+                        function (response) {
+                            deferred.resolve(response);
+                        },
+                        function (error) {
+                            deferred.reject(error);
+                        },
+                        query
+                    );
+                    return deferred.promise;
+                },
+                details:function(parentRoleId,roleName) {
+                    var deferred = $q.defer();
+                    uds.getRoleDetails(
+                        function (response) {
+                            deferred.resolve(response);
+                        },
+                        function (error) {
+                            deferred.reject(error);
+                        },
+                        parentRoleId,
+                        roleName
+                    );
+                    return deferred.promise;
+                },
+                parentDetails:function(parentUserId,parentRoleId,roleName) {
+                    var deferred = $q.defer();
+                    uds.getRoleParentDetails(
+                        function (response) {
+                            deferred.resolve(response);
+                        },
+                        function (error) {
+                            deferred.reject(error);
+                        },
+                        parentUserId,
+                        parentRoleId,
+                        roleName
+                    );
+                    return deferred.promise;
+                },
+                removeUserRole: function(userId,query){
+                    var deferred = $q.defer();
+                    uds.removeUserRole(
+                        function (response) {
+                            deferred.resolve(response);
+                        },
+                        function (error) {
+                            deferred.reject(error);
+                        },
+                        userId,
+                        query
+                    );
+                    return deferred.promise;
+                },
+                user: {
+                    put: function(userId, uql, data){
+                        var deferred = $q.defer();
+                        uds.postAddUsersToRole(
+                            function (response) {
+                                deferred.resolve(response);
+                            },
+                            function (error) {
+                                deferred.reject(error);
+                            },
+                            userId,
+                            uql,
+                            data
+                        );
+                        return deferred.promise;
+                    }
                 }
             }
         };
