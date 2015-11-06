@@ -2302,19 +2302,6 @@ angular.module('RedhatAccess.common').factory('udsService', [
                     );
                     return deferred.promise;
                 },
-                details:function(sbrName) {
-                    var deferred = $q.defer();
-                    uds.getSbrDetails(
-                        function (response) {
-                            deferred.resolve(response);
-                        },
-                        function (error) {
-                            deferred.reject(error);
-                        },
-                        sbrName
-                    );
-                    return deferred.promise;
-                },
                 removeUserSbr: function(userId,query){
                     var deferred = $q.defer();
                     uds.removeUserSbr(
@@ -2358,35 +2345,6 @@ angular.module('RedhatAccess.common').factory('udsService', [
                             deferred.reject(error);
                         },
                         query
-                    );
-                    return deferred.promise;
-                },
-                details:function(parentRoleId,roleName) {
-                    var deferred = $q.defer();
-                    uds.getRoleDetails(
-                        function (response) {
-                            deferred.resolve(response);
-                        },
-                        function (error) {
-                            deferred.reject(error);
-                        },
-                        parentRoleId,
-                        roleName
-                    );
-                    return deferred.promise;
-                },
-                parentDetails:function(parentUserId,parentRoleId,roleName) {
-                    var deferred = $q.defer();
-                    uds.getRoleParentDetails(
-                        function (response) {
-                            deferred.resolve(response);
-                        },
-                        function (error) {
-                            deferred.reject(error);
-                        },
-                        parentUserId,
-                        parentRoleId,
-                        roleName
                     );
                     return deferred.promise;
                 },
