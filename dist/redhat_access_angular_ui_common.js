@@ -1,4 +1,4 @@
-/*! redhat_access_angular_ui_common - v1.0.23 - 2015-11-10
+/*! redhat_access_angular_ui_common - v1.1.1 - 2015-11-18
  * Copyright (c) 2015 ;
  * Licensed 
  */
@@ -1744,6 +1744,15 @@ angular.module('RedhatAccess.common').factory('strataService', [
                     var deferred = $q.defer();
                     strata.escalation.create(escalationJSON, function (escalationNum) {
                         deferred.resolve(escalationNum);
+                    }, angular.bind(deferred, errorHandler));
+                    return deferred.promise;
+                }
+            },
+            reviews: {
+                getCaseNumber: function (query) {
+                    var deferred = $q.defer();
+                    strata.reviews.getCaseNumber(query, function (response) {
+                        deferred.resolve(response);
                     }, angular.bind(deferred, errorHandler));
                     return deferred.promise;
                 }
