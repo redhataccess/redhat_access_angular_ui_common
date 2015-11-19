@@ -784,6 +784,22 @@ angular.module('RedhatAccess.common').factory('strataService', [
                     }, angular.bind(deferred, errorHandler));
                     return deferred.promise;
                 }
+            },
+            reviews: {
+                getCaseNumber: function (query) {
+                    var deferred = $q.defer();
+                    strata.reviews.getCaseNumber(query, function (response) {
+                        deferred.resolve(response);
+                    }, angular.bind(deferred, errorHandler));
+                    return deferred.promise;
+                },
+                getSolutionNumber: function (query) {
+                    var deferred = $q.defer();
+                    strata.reviews.getSolutionNumber(query, function (response) {
+                        deferred.resolve(response);
+                    }, angular.bind(deferred, errorHandler));
+                    return deferred.promise;
+                }
             }
         };
         return service;
