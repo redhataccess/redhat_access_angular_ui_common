@@ -792,6 +792,13 @@ angular.module('RedhatAccess.common').factory('strataService', [
                         deferred.resolve(response);
                     }, angular.bind(deferred, errorHandler));
                     return deferred.promise;
+                },
+                getSolutionNumber: function (query) {
+                    var deferred = $q.defer();
+                    strata.reviews.getSolutionNumber(query, function (response) {
+                        deferred.resolve(response);
+                    }, angular.bind(deferred, errorHandler));
+                    return deferred.promise;
                 }
             }
         };
