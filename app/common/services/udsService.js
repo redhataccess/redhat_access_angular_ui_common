@@ -98,6 +98,9 @@ angular.module('RedhatAccess.common').factory('udsService', [
                 },
                 notes:function(accountNumber){
                     return  uds.fetchAccountNotes(accountNumber);
+                },
+                openCases:function(uql){
+                    return uds.getOpenCasesForAccount(uql);
                 }
             },
             user:{

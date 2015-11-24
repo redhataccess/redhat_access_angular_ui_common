@@ -1,4 +1,4 @@
-/*! redhat_access_angular_ui_common - v1.1.1 - 2015-11-19
+/*! redhat_access_angular_ui_common - v1.1.2 - 2015-11-24
  * Copyright (c) 2015 ;
  * Licensed 
  */
@@ -1869,6 +1869,9 @@ angular.module('RedhatAccess.common').factory('udsService', [
                 },
                 notes:function(accountNumber){
                     return  uds.fetchAccountNotes(accountNumber);
+                },
+                openCases:function(uql){
+                    return uds.getOpenCasesForAccount(uql);
                 }
             },
             user:{
