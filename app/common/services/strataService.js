@@ -461,6 +461,37 @@ angular.module('RedhatAccess.common').factory('strataService', [
                         return deferred.promise;
                     }
                 },
+                externalUpdates: {
+                    list: function (id) {
+                        var deferred = $q.defer();
+                        if (!ie8 && strataCache.get('externalUpdates' + id)) {
+                            //Changing cache response. Making sortModifiedDate as Date before sending
+                            var externalUpdates=strataCache.get('externalUpdates' + id);
+                            angular.forEach(externalUpdates, angular.bind(this, function (externalUpdates) {
+                                externalUpdates.sortModifiedDate=new Date(externalUpdates.sortModifiedDate);
+                            }));
+
+                            deferred.resolve(externalUpdates);
+                        } else {
+                            strata.cases.externalUpdates.list(id, function (response) {
+                                angular.forEach(response , angular.bind(this, function (externalUpdate) {
+                                    var sortPublishedDate=externalUpdate.created_date;
+                                    externalUpdate.sortModifiedDate=sortPublishedDate;
+
+                                    var createdDate=RHAUtils.convertToTimezone(externalUpdate.created_date);
+                                    externalUpdate.created_date=RHAUtils.formatDate(createdDate,'MMM DD YYYY');
+                                    externalUpdate.created_time=RHAUtils.formatDate(createdDate,'hh:mm A Z');
+
+                                }));
+                                if (!ie8) {
+                                    strataCache.put('externalUpdates' + id, response);
+                                }
+                                deferred.resolve(response);
+                            }, angular.bind(deferred, errorHandler));
+                        }
+                        return deferred.promise;
+                    }
+                },
                 comments: {
                     get: function (id) {
                         var deferred = $q.defer();
