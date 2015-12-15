@@ -1,4 +1,4 @@
-/*! redhat_access_angular_ui_common - v1.1.3 - 2015-11-26
+/*! redhat_access_angular_ui_common - v1.1.4 - 2015-12-15
  * Copyright (c) 2015 ;
  * Licensed 
  */
@@ -1431,8 +1431,7 @@ angular.module('RedhatAccess.common').factory('strataService', [
                             //Changing cache response. Making sortModifiedDate as Date before sending
                             var externalUpdates=strataCache.get('externalUpdates' + id);
                             angular.forEach(externalUpdates, angular.bind(this, function (externalUpdates) {
-                                // Look at this
-                                //externalUpdates.sortModifiedDate=new Date(externalUpdates.sortModifiedDate);
+                                externalUpdates.sortModifiedDate=new Date(externalUpdates.sortModifiedDate);
                             }));
 
                             deferred.resolve(externalUpdates);
@@ -1817,6 +1816,9 @@ angular.module('RedhatAccess.common').factory('udsService', [
                         sortOption,
                         onlyStatus
                     );
+                },
+                sbrs: function(){
+                    return  uds.fetchCaseSbrs();
                 }
             },
             bomgar: {
