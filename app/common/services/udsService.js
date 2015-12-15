@@ -14,6 +14,9 @@ angular.module('RedhatAccess.common').factory('udsService', [
                         sortOption,
                         onlyStatus
                     );
+                },
+                sbrs: function(){
+                    return  uds.fetchCaseSbrs();
                 }
             },
             bomgar: {
