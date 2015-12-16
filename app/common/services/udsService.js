@@ -154,6 +154,9 @@ angular.module('RedhatAccess.common').factory('udsService', [
                             );
                         }
                     }
+                },
+                pinSolution:function(caseNumber,solutionJson){
+                    return  uds.pinSolutionToCase(caseNumber,solutionJson);
                 }
             },
             sbr: {

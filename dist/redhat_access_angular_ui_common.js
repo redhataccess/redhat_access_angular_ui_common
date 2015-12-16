@@ -1,4 +1,4 @@
-/*! redhat_access_angular_ui_common - v1.1.4 - 2015-12-15
+/*! redhat_access_angular_ui_common - v1.1.5 - 2015-12-16
  * Copyright (c) 2015 ;
  * Licensed 
  */
@@ -1956,6 +1956,9 @@ angular.module('RedhatAccess.common').factory('udsService', [
                             );
                         }
                     }
+                },
+                pinSolution:function(caseNumber,solutionJson){
+                    return  uds.pinSolutionToCase(caseNumber,solutionJson);
                 }
             },
             sbr: {
