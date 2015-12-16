@@ -1,6 +1,6 @@
 {
     "name": "redhat-access-angular-ui-common",
-    "version": "1.1.4",
+    "version": "1.1.5",
     "main": "dist/redhat_access_angular_ui_common.js",
     "dependencies": {
         "angular": "1.2.1",
