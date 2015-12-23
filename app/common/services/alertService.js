@@ -70,8 +70,8 @@ angular.module('RedhatAccess.header').service('AlertService', [
             }
         };
         this.addUDSErrorMessage = function (error) {
-            if (RHAUtils.isNotEmpty(error)) {
-                this.addDangerMessage(error);
+            if ( RHAUtils.isNotEmpty(error) && RHAUtils.isNotEmpty(error.responseText) ) {
+                this.addDangerMessage(error.responseText);
             }
         };
         $rootScope.$on(AUTH_EVENTS.logoutSuccess, angular.bind(this, function () {

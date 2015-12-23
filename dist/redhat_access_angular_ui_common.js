@@ -1,4 +1,4 @@
-/*! redhat_access_angular_ui_common - v1.1.7 - 2015-12-23
+/*! redhat_access_angular_ui_common - v1.1.8 - 2015-12-23
  * Copyright (c) 2015 ;
  * Licensed 
  */
@@ -819,8 +819,8 @@ angular.module('RedhatAccess.header').service('AlertService', [
             }
         };
         this.addUDSErrorMessage = function (error) {
-            if (RHAUtils.isNotEmpty(error)) {
-                this.addDangerMessage(error);
+            if ( RHAUtils.isNotEmpty(error) && RHAUtils.isNotEmpty(error.responseText) ) {
+                this.addDangerMessage(error.responseText);
             }
         };
         $rootScope.$on(AUTH_EVENTS.logoutSuccess, angular.bind(this, function () {
