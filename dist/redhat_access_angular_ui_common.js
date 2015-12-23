@@ -1,4 +1,4 @@
-/*! redhat_access_angular_ui_common - v1.1.6 - 2015-12-22
+/*! redhat_access_angular_ui_common - v1.1.7 - 2015-12-23
  * Copyright (c) 2015 ;
  * Licensed 
  */
@@ -1946,6 +1946,13 @@ angular.module('RedhatAccess.common').factory('udsService', [
                             caseNumber,
                             reviewData
                         );
+                    }
+                }
+            },
+            reviews: {
+                dependencies: {
+                    get: function(){
+                        return uds.getQuestionDependencies();
                     }
                 }
             },

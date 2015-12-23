@@ -133,6 +133,13 @@ angular.module('RedhatAccess.common').factory('udsService', [
                     }
                 }
             },
+            reviews: {
+                dependencies: {
+                    get: function(){
+                        return uds.getQuestionDependencies();
+                    }
+                }
+            },
             solution: {
                 details:{
                     get: function(solutionNumber){
