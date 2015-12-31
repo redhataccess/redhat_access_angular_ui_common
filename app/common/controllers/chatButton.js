@@ -21,7 +21,8 @@ angular.module('RedhatAccess.header').controller('ChatButton', [
     '$sce',
     '$http',
     '$interval',
-    function ($scope, CaseService, securityService, strataService, AlertService, CHAT_SUPPORT, AUTH_EVENTS, $rootScope, $sce, $http, $interval) {
+    'RHAUtils',
+    function ($scope, CaseService, securityService, strataService, AlertService, CHAT_SUPPORT, AUTH_EVENTS, $rootScope, $sce, $http, $interval,RHAUtils) {
         $scope.securityService = securityService;
         if (window.chatInitialized === undefined) {
             window.chatInitialized = false;
@@ -79,8 +80,14 @@ angular.module('RedhatAccess.header').controller('ChatButton', [
             //liveagent
             //  .addCustomDetail('Contact E-mail', email)
             //  .map('Contact', 'Email', false, false, false);
-            liveagent.addCustomDetail('Account Number', accountNumber).map('Account', 'AccountNumber', true, true, true);
-            liveagent.setName(name);
+             if(RHAUtils.isNotEmpty(accountNumber))
+             {
+                liveagent.addCustomDetail('Account Number', accountNumber).map('Account', 'AccountNumber', true, true, true);
+             }
+             if(RHAUtils.isNotEmpty(name))
+             {
+                liveagent.setName(name);
+             }
             liveagent.addCustomDetail('Name', name);
             liveagent.setChatWindowHeight('552');
             //liveagent.enableLogging();
