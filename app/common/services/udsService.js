@@ -93,6 +93,11 @@ angular.module('RedhatAccess.common').factory('udsService', [
                     remove: function(caseNumber) {
                         return uds.releaselock(caseNumber);
                     }
+                },
+                calls: {
+                    get: function(caseNumber) {
+                        return  uds.getCallLogsForCase(caseNumber);
+                    }
                 }
             },
             account:{
