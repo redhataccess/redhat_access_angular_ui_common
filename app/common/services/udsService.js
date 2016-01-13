@@ -77,6 +77,17 @@ angular.module('RedhatAccess.common').factory('udsService', [
                                 hoursWorked
                             );
                         }
+                    },
+                    put: {
+                        private: function (caseNumber, commentText,caseCommentId ) {
+                            return uds.postEditPrivateComments(
+                                caseNumber,
+                                commentText,
+                                caseCommentId
+
+                            );
+                        }
+
                     }
                 },
                 history:{
