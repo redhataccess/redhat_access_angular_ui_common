@@ -1,4 +1,4 @@
-/*! redhat_access_angular_ui_common - v1.1.11 - 2016-01-11
+/*! redhat_access_angular_ui_common - v1.1.12 - 2016-01-18
  * Copyright (c) 2016 ;
  * Licensed 
  */
@@ -1530,6 +1530,24 @@ angular.module('RedhatAccess.common').factory('strataService', [
                         return deferred.promise;
                     }
                 },
+                symptoms: {
+                    get: function (id) {
+                        var deferred = $q.defer();
+                        strata.cases.symptoms.get(id, function (response) {
+                            deferred.resolve(response);
+                        }, angular.bind(deferred, errorHandler));
+                        return deferred.promise;
+                    },
+                    solutions: {
+                        post: function (limit, isOnlySymptoms, data) {
+                            var deferred = $q.defer();
+                            strata.cases.symptoms.solutions.post(limit, isOnlySymptoms, data, function (response) {
+                                deferred.resolve(response);
+                            }, angular.bind(deferred, errorHandler));
+                            return deferred.promise;
+                        }
+                    }
+                },
                 notified_users: {
                     add: function (caseNumber, ssoUserName) {
                         var deferred = $q.defer();
@@ -1920,7 +1938,6 @@ angular.module('RedhatAccess.common').factory('udsService', [
                 calls: {
                     get: function(caseNumber) {
                         return  uds.getCallLogsForCase(caseNumber);
-
                     }
                 }
             },

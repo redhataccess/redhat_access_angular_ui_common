@@ -560,6 +560,24 @@ angular.module('RedhatAccess.common').factory('strataService', [
                         return deferred.promise;
                     }
                 },
+                symptoms: {
+                    get: function (id) {
+                        var deferred = $q.defer();
+                        strata.cases.symptoms.get(id, function (response) {
+                            deferred.resolve(response);
+                        }, angular.bind(deferred, errorHandler));
+                        return deferred.promise;
+                    },
+                    solutions: {
+                        post: function (limit, isOnlySymptoms, data) {
+                            var deferred = $q.defer();
+                            strata.cases.symptoms.solutions.post(limit, isOnlySymptoms, data, function (response) {
+                                deferred.resolve(response);
+                            }, angular.bind(deferred, errorHandler));
+                            return deferred.promise;
+                        }
+                    }
+                },
                 notified_users: {
                     add: function (caseNumber, ssoUserName) {
                         var deferred = $q.defer();
