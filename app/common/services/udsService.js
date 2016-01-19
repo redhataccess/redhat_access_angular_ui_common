@@ -109,6 +109,9 @@ angular.module('RedhatAccess.common').factory('udsService', [
                 },
                 openCases:function(uql){
                     return uds.getOpenCasesForAccount(uql);
+                },
+                getContacts: function(accountNumber){
+                    return uds.getAccountContacts(accountNumber);
                 }
             },
             user:{
@@ -119,6 +122,9 @@ angular.module('RedhatAccess.common').factory('udsService', [
                 },
                 details:function(ssoUsername){
                     return uds.fetchUserDetails(ssoUsername);
+                },
+                getCaseGroups:function(ssoUsername){
+                    return uds.getCaseGroupsForContact(ssoUsername);
                 }
             },
             cqi: {
