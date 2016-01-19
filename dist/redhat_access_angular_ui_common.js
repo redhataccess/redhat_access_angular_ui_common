@@ -1,4 +1,4 @@
-/*! redhat_access_angular_ui_common - v1.1.13 - 2016-01-18
+/*! redhat_access_angular_ui_common - v1.1.13 - 2016-01-19
  * Copyright (c) 2016 ;
  * Licensed 
  */
@@ -932,11 +932,10 @@ angular.module('RedhatAccess.common').service('ConstantsService', [
 angular.module('RedhatAccess.header').factory('HeaderService', [
     'COMMON_CONFIG',
     'strataService',
-    'CaseService',
     'securityService',
     'AlertService',
     '$q',
-    function (COMMON_CONFIG , strataService , CaseService, securityService , AlertService , $q) {
+    function (COMMON_CONFIG , strataService , securityService , AlertService , $q) {
         var service = {
             sfdcIsHealthy: COMMON_CONFIG.sfdcIsHealthy,
             checkSfdcHealth: function() {
@@ -945,13 +944,11 @@ angular.module('RedhatAccess.header').factory('HeaderService', [
                     strataService.health.sfdc().then(angular.bind(this, function (response) {
                         if (response.name === 'SFDC' && response.status === true) {
                             service.sfdcIsHealthy = true;
-                            CaseService.sfdcIsHealthy = true;
                         }
                         deferred.resolve(response);
                     }), angular.bind(this, function (error) {
                         if (error.xhr.status === 502) {
                             service.sfdcIsHealthy = false;
-                            CaseService.sfdcIsHealthy = false;
                         }
                         AlertService.addStrataErrorMessage(error);
                         deferred.reject();
@@ -1873,17 +1870,6 @@ angular.module('RedhatAccess.common').factory('udsService', [
                     },
                     put: function(caseNumber,caseDetails){
                         return  uds.updateCaseDetails(caseNumber,caseDetails);
-                    }
-                },
-                nep: {
-                    create: function(caseNumber, nep){
-                        return uds.createCaseNep(caseNumber, nep);
-                    },
-                    update: function(caseNumber, nep){
-                        return uds.updateCaseNep(caseNumber, nep);
-                    },
-                    remove: function(caseNumber){
-                        return uds.removeCaseNep(caseNumber);
                     }
                 },
                 associates:{
