@@ -1,4 +1,4 @@
-/*! redhat_access_angular_ui_common - v1.1.13 - 2016-01-19
+/*! redhat_access_angular_ui_common - v1.1.14 - 2016-01-19
  * Copyright (c) 2016 ;
  * Licensed 
  */
@@ -1870,6 +1870,17 @@ angular.module('RedhatAccess.common').factory('udsService', [
                     },
                     put: function(caseNumber,caseDetails){
                         return  uds.updateCaseDetails(caseNumber,caseDetails);
+                    }
+                },
+                nep: {
+                    create: function(caseNumber, nep){
+                        return uds.createCaseNep(caseNumber, nep);
+                    },
+                    update: function(caseNumber, nep){
+                        return uds.updateCaseNep(caseNumber, nep);
+                    },
+                    remove: function(caseNumber){
+                        return uds.removeCaseNep(caseNumber);
                     }
                 },
                 associates:{
