@@ -34,6 +34,17 @@ angular.module('RedhatAccess.common').factory('udsService', [
                         return  uds.updateCaseDetails(caseNumber,caseDetails);
                     }
                 },
+                nep: {
+                    create: function(caseNumber, nep){
+                        return uds.createCaseNep(caseNumber, nep);
+                    },
+                    update: function(caseNumber, nep){
+                        return uds.updateCaseNep(caseNumber, nep);
+                    },
+                    remove: function(caseNumber){
+                        return uds.removeCaseNep(caseNumber);
+                    }
+                },
                 associates:{
                     get:function(userId,roleName){
                         return uds.fetchCaseAssociateDetails(userId,roleName);
