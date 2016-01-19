@@ -1,4 +1,4 @@
-/*! redhat_access_angular_ui_common - v1.1.14 - 2016-01-19
+/*! redhat_access_angular_ui_common - v1.1.15 - 2016-01-19
  * Copyright (c) 2016 ;
  * Licensed 
  */
@@ -578,12 +578,11 @@ angular.module('RedhatAccess.header').controller('HeaderController', [
     '$scope',
     'AlertService',
     'HeaderService',
-    'CaseService',
     'COMMON_CONFIG',
     'RHAUtils',
     '$interval',
     '$sce',
-    function ($scope, AlertService , HeaderService , CaseService , COMMON_CONFIG , RHAUtils, $interval , $sce) {
+    function ($scope, AlertService , HeaderService , COMMON_CONFIG , RHAUtils, $interval , $sce) {
         /**
        * For some reason the rhaAlert directive's controller is not binding to the view.
        * Hijacking rhaAlert's parent controller (HeaderController) works
@@ -591,7 +590,6 @@ angular.module('RedhatAccess.header').controller('HeaderController', [
        */
         $scope.AlertService = AlertService;
         $scope.HeaderService = HeaderService;
-        $scope.CaseService = CaseService;
         $scope.closeable = true;
         $scope.closeAlert = function (index) {
             AlertService.alerts.splice(index, 1);
@@ -602,7 +600,6 @@ angular.module('RedhatAccess.header').controller('HeaderController', [
         $scope.init = function () {
             HeaderService.pageLoadFailure = false;
             HeaderService.showPartnerEscalationError = false;
-            CaseService.sfdcIsHealthy = COMMON_CONFIG.sfdcIsHealthy;
             HeaderService.sfdcIsHealthy = COMMON_CONFIG.sfdcIsHealthy;
             if (COMMON_CONFIG.doSfdcHealthCheck) {
                 $scope.healthTimer = $interval(HeaderService.checkSfdcHealth, COMMON_CONFIG.healthCheckInterval);
@@ -2355,7 +2352,7 @@ angular.module("common/views/chatButton.html", []).run(["$templateCache", functi
 
 angular.module("common/views/header.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("common/views/header.html",
-    "<div rha-403error=\"\"></div><div rha-404error=\"\"></div><div ng-show=\"HeaderService.sfdcIsHealthy\"></div><div rha-alert=\"\"></div><div ng-hide=\"failedToLoadCase || !securityService.loginStatus.userAllowedToManageCases\"><div ng-show=\"pageLoading\" class=\"spinner spinner-inline\"></div></div><div ng-hide=\"HeaderService.pageLoadFailure || !securityService.loginStatus.userAllowedToManageCases\" class=\"page-header\"><div ng-hide=\"page ===&quot;&quot;\" rha-titletemplate=\"\" page=\"{{page}}\"></div><div ng-show=\"page === &quot;caseView&quot;\">Filed on&nbsp;</div><div ng-show=\"securityService.loginStatus.isLoggedIn &amp;&amp; securityService.loginStatus.authedUser.has_chat &amp;&amp; CaseService.sfdcIsHealthy\" rha-chatbutton=\"\"></div></div><div rha-loginstatus=\"\"></div><div ng-show=\"!HeaderService.sfdcIsHealthy\" ng-bind-html=\"parseSfdcOutageHtml()\"></div>");
+    "<div rha-403error=\"\"></div><div rha-404error=\"\"></div><div ng-show=\"HeaderService.sfdcIsHealthy\"></div><div rha-alert=\"\"></div><div ng-hide=\"failedToLoadCase || !securityService.loginStatus.userAllowedToManageCases\"><div ng-show=\"pageLoading\" class=\"spinner spinner-inline\"></div></div><div ng-hide=\"HeaderService.pageLoadFailure || !securityService.loginStatus.userAllowedToManageCases\" class=\"page-header\"><div ng-hide=\"page ===&quot;&quot;\" rha-titletemplate=\"\" page=\"{{page}}\"></div><div ng-show=\"page === &quot;caseView&quot;\">Filed on&nbsp;</div><div ng-show=\"securityService.loginStatus.isLoggedIn &amp;&amp; securityService.loginStatus.authedUser.has_chat &amp;&amp; HeaderService.sfdcIsHealthy\" rha-chatbutton=\"\"></div></div><div rha-loginstatus=\"\"></div><div ng-show=\"!HeaderService.sfdcIsHealthy\" ng-bind-html=\"parseSfdcOutageHtml()\"></div>");
 }]);
 
 angular.module("common/views/title.html", []).run(["$templateCache", function($templateCache) {
