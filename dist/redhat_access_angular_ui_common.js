@@ -1,4 +1,4 @@
-/*! redhat_access_angular_ui_common - v1.1.12 - 2016-01-18
+/*! redhat_access_angular_ui_common - v1.1.16 - 2016-01-21
  * Copyright (c) 2016 ;
  * Licensed 
  */
@@ -1950,6 +1950,11 @@ angular.module('RedhatAccess.common').factory('udsService', [
                 },
                 openCases:function(uql){
                     return uds.getOpenCasesForAccount(uql);
+                },
+                avgCSAT:{
+                    get:function(uql){
+                        return uds.getAvgCSATForAccount(uql);
+                    }
                 }
             },
             user:{

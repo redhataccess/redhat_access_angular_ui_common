@@ -109,6 +109,11 @@ angular.module('RedhatAccess.common').factory('udsService', [
                 },
                 openCases:function(uql){
                     return uds.getOpenCasesForAccount(uql);
+                },
+                avgCSAT:{
+                    get:function(uql){
+                        return uds.getAvgCSATForAccount(uql);
+                    }
                 }
             },
             user:{
