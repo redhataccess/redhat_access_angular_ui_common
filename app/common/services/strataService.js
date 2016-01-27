@@ -183,9 +183,7 @@ angular.module('RedhatAccess.common').factory('strataService', [
                       function (solution) {
                         deferred.resolve(solution);
                       },
-                      function () {
-                        angular.bind(deferred, errorHandler);
-                      }
+                      angular.bind(deferred, errorHandler)
                     );
 
                     return deferred.promise;
