@@ -1,4 +1,4 @@
-/*! redhat_access_angular_ui_common - v1.1.16 - 2016-01-21
+/*! redhat_access_angular_ui_common - v1.1.17 - 2016-01-27
  * Copyright (c) 2016 ;
  * Licensed 
  */
@@ -1139,6 +1139,20 @@ angular.module('RedhatAccess.common').factory('strataService', [
                         false);
                     return deferred.promise;
 
+                },
+                post: function (solution) {
+                    var deferred = $q.defer();
+                    strata.solutions.post(
+                      solution,
+                      function (solution) {
+                        deferred.resolve(solution);
+                      },
+                      function () {
+                        angular.bind(deferred, errorHandler);
+                      }
+                    );
+
+                    return deferred.promise;
                 }
             },
             search: function (searchString, max) {

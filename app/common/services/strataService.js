@@ -175,6 +175,18 @@ angular.module('RedhatAccess.common').factory('strataService', [
                         false);
                     return deferred.promise;
 
+                },
+                post: function (solution) {
+                    var deferred = $q.defer();
+                    strata.solutions.post(
+                      solution,
+                      function (solution) {
+                        deferred.resolve(solution);
+                      },
+                      angular.bind(deferred, errorHandler)
+                    );
+
+                    return deferred.promise;
                 }
             },
             search: function (searchString, max) {
