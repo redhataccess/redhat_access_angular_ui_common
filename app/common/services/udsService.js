@@ -125,6 +125,12 @@ angular.module('RedhatAccess.common').factory('udsService', [
                     get:function(uql){
                         return uds.getAvgCSATForAccount(uql);
                     }
+                },
+                getCaseContacts:function(accountNumber){
+                    return uds.getCaseContactsForAccount(accountNumber);
+                },
+                getCaseGroups: function(contactSSO){
+                    return uds.getCaseGroupsForContact(contactSSO);
                 }
             },
             user:{
