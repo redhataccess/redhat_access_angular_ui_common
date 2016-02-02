@@ -3,12 +3,11 @@ angular.module('RedhatAccess.header').controller('HeaderController', [
     '$scope',
     'AlertService',
     'HeaderService',
-    'CaseService',
     'COMMON_CONFIG',
     'RHAUtils',
     '$interval',
     '$sce',
-    function ($scope, AlertService , HeaderService , CaseService , COMMON_CONFIG , RHAUtils, $interval , $sce) {
+    function ($scope, AlertService , HeaderService , COMMON_CONFIG , RHAUtils, $interval , $sce) {
         /**
        * For some reason the rhaAlert directive's controller is not binding to the view.
        * Hijacking rhaAlert's parent controller (HeaderController) works
@@ -16,7 +15,6 @@ angular.module('RedhatAccess.header').controller('HeaderController', [
        */
         $scope.AlertService = AlertService;
         $scope.HeaderService = HeaderService;
-        $scope.CaseService = CaseService;
         $scope.closeable = true;
         $scope.closeAlert = function (index) {
             AlertService.alerts.splice(index, 1);
@@ -27,7 +25,6 @@ angular.module('RedhatAccess.header').controller('HeaderController', [
         $scope.init = function () {
             HeaderService.pageLoadFailure = false;
             HeaderService.showPartnerEscalationError = false;
-            CaseService.sfdcIsHealthy = COMMON_CONFIG.sfdcIsHealthy;
             HeaderService.sfdcIsHealthy = COMMON_CONFIG.sfdcIsHealthy;
             if (COMMON_CONFIG.doSfdcHealthCheck) {
                 $scope.healthTimer = $interval(HeaderService.checkSfdcHealth, COMMON_CONFIG.healthCheckInterval);
