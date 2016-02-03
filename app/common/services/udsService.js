@@ -131,6 +131,11 @@ angular.module('RedhatAccess.common').factory('udsService', [
                 },
                 getCaseGroups: function(contactSSO){
                     return uds.getCaseGroupsForContact(contactSSO);
+                },
+                rmeCount:{
+                    get:function(uql){
+                        return uds.getRMECountForAccount(uql);
+                    }
                 }
             },
             user:{
