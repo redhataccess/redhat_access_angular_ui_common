@@ -46,10 +46,9 @@ angular.module('RedhatAccess.common').factory('udsService', [
                     }
                 },
                 associates:{
-                    get:function(userId,roleName){
-                        return uds.fetchCaseAssociateDetails(userId,roleName);
-
-                    },
+                     get:function(uqlContributors){
+                        return uds.fetchCaseAssociateDetails(uqlContributors);
+                     },
                     post:function(caseId,userId,roleName)
                     {
                         var jsonAssociates=

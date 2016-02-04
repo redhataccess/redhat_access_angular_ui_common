@@ -1,4 +1,4 @@
-/*! redhat_access_angular_ui_common - v1.1.19 - 2016-02-03
+/*! redhat_access_angular_ui_common - v1.1.19 - 2016-02-04
  * Copyright (c) 2016 ;
  * Licensed 
  */
@@ -1147,9 +1147,7 @@ angular.module('RedhatAccess.common').factory('strataService', [
                       function (solution) {
                         deferred.resolve(solution);
                       },
-                      function () {
-                        angular.bind(deferred, errorHandler);
-                      }
+                      angular.bind(deferred, errorHandler)
                     );
 
                     return deferred.promise;
@@ -1895,10 +1893,9 @@ angular.module('RedhatAccess.common').factory('udsService', [
                     }
                 },
                 associates:{
-                    get:function(userId,roleName){
-                        return uds.fetchCaseAssociateDetails(userId,roleName);
-
-                    },
+                     get:function(uqlContributors){
+                        return uds.fetchCaseAssociateDetails(uqlContributors);
+                     },
                     post:function(caseId,userId,roleName)
                     {
                         var jsonAssociates=
