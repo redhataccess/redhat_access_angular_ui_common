@@ -1,4 +1,4 @@
-/*! redhat_access_angular_ui_common - v1.1.18 - 2016-02-02
+/*! redhat_access_angular_ui_common - v1.1.19 - 2016-02-03
  * Copyright (c) 2016 ;
  * Licensed 
  */
@@ -1980,6 +1980,11 @@ angular.module('RedhatAccess.common').factory('udsService', [
                 },
                 getCaseGroups: function(contactSSO){
                     return uds.getCaseGroupsForContact(contactSSO);
+                },
+                rmeCount:{
+                    get:function(uql){
+                        return uds.getRMECountForAccount(uql);
+                    }
                 }
             },
             user:{
