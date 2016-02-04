@@ -1893,9 +1893,9 @@ angular.module('RedhatAccess.common').factory('udsService', [
                     }
                 },
                 associates:{
-                    get:function(userId,roleName,internalStatus,externalStatus){
-                        return uds.fetchCaseAssociateDetails(userId,roleName,internalStatus,externalStatus);
-                    },
+                     get:function(uqlContributors){
+                        return uds.fetchCaseAssociateDetails(uqlContributors);
+                     },
                     post:function(caseId,userId,roleName)
                     {
                         var jsonAssociates=
