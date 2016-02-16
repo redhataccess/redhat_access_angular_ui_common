@@ -66,6 +66,23 @@ angular.module('RedhatAccess.common').factory('udsService', [
                             jsonAssociates
                         );
 
+                    },
+                    remove:function(caseId,associateId){
+                        return uds.deleteAssociates(caseId,associateId);
+                    },
+                    update: function(caseId,userId,roleName,associateId){
+                        var jsonAssociates=
+                        {
+                            "resource": {
+                                "associate": {
+                                    "externalModelId": userId
+
+                                },
+                                "role": roleName
+                            },
+                            "externalModelId": associateId
+                        };
+                        return uds.updateCaseAssociate(caseId,jsonAssociates);
                     }
                 },
                 comments: {

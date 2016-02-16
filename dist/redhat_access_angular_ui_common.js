@@ -1,4 +1,4 @@
-/*! redhat_access_angular_ui_common - v1.1.21 - 2016-02-15
+/*! redhat_access_angular_ui_common - v1.1.22 - 2016-02-16
  * Copyright (c) 2016 ;
  * Licensed 
  */
@@ -1921,6 +1921,23 @@ angular.module('RedhatAccess.common').factory('udsService', [
                             jsonAssociates
                         );
 
+                    },
+                    remove:function(caseId,associateId){
+                        return uds.deleteAssociates(caseId,associateId);
+                    },
+                    update: function(caseId,userId,roleName,associateId){
+                        var jsonAssociates=
+                        {
+                            "resource": {
+                                "associate": {
+                                    "externalModelId": userId
+
+                                },
+                                "role": roleName
+                            },
+                            "externalModelId": associateId
+                        };
+                        return uds.updateCaseAssociate(caseId,jsonAssociates);
                     }
                 },
                 comments: {
