@@ -125,6 +125,11 @@ angular.module('RedhatAccess.common').factory('udsService', [
                     get: function(caseNumber) {
                         return  uds.getCallLogsForCase(caseNumber);
                     }
+                },
+                sbt:{
+                    get: function(uql) {
+                        return uds.getSbtForCase(uql);
+                    }
                 }
             },
             account:{
