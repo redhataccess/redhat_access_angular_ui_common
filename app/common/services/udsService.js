@@ -128,7 +128,7 @@ angular.module('RedhatAccess.common').factory('udsService', [
                 },
                 sbt:{
                     get: function(uql) {
-                        return uds.getSbtForCase(uql);
+                        return uds.fetchCases(uql,null,null,null,true);
                     }
                 }
             },
