@@ -195,9 +195,10 @@ angular.module('RedhatAccess.common').factory('udsService', [
             },
             solution: {
                 details:{
-                    get: function(solutionNumber){
+                    get: function(solutionNumber, resourceProjection){
                         return  uds.getSolutionDetails(
-                            solutionNumber
+                            solutionNumber,
+                            resourceProjection
                         );
                     }
                 },
