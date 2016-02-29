@@ -1,4 +1,4 @@
-/*! redhat_access_angular_ui_common - v1.1.25 - 2016-02-26
+/*! redhat_access_angular_ui_common - v1.1.26 - 2016-02-29
  * Copyright (c) 2016 ;
  * Licensed 
  */
@@ -1102,7 +1102,7 @@ angular.module('RedhatAccess.common').factory('strataService', [
             recommendationsForCase: function (data, limit, start, highlight, highlightTagPre, highlightTagPost) {
               var deferred = $q.defer();
                 strata.recommendationsForCase(data, function (response) {
-                    deferred.resolve(response.response);
+                    deferred.resolve(response);
                 }, angular.bind(deferred, errorHandler), limit, start, highlight, highlightTagPre, highlightTagPost);
 
                 return deferred.promise;
