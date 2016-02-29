@@ -138,7 +138,7 @@ angular.module('RedhatAccess.common').factory('strataService', [
             recommendationsForCase: function (data, limit, start, highlight, highlightTagPre, highlightTagPost) {
               var deferred = $q.defer();
                 strata.recommendationsForCase(data, function (response) {
-                    deferred.resolve(response.response);
+                    deferred.resolve(response);
                 }, angular.bind(deferred, errorHandler), limit, start, highlight, highlightTagPre, highlightTagPost);
 
                 return deferred.promise;
