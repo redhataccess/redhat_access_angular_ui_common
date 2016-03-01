@@ -1,4 +1,4 @@
-/*! redhat_access_angular_ui_common - v1.1.26 - 2016-02-29
+/*! redhat_access_angular_ui_common - v1.1.26 - 2016-03-01
  * Copyright (c) 2016 ;
  * Licensed 
  */
@@ -776,22 +776,23 @@ angular.module('RedhatAccess.header').service('AlertService', [
         this.removeAlert = function (alert) {
             this.alerts.splice(this.alerts.indexOf(alert), 1);
         };
-        this.addDangerMessage = function (message) {
-            return this.addMessage(message, ALERT_TYPES.DANGER);
+        this.addDangerMessage = function (message, isHtml) {
+            return this.addMessage(message, ALERT_TYPES.DANGER, isHtml);
         };
-        this.addSuccessMessage = function (message) {
-            return this.addMessage(message, ALERT_TYPES.SUCCESS);
+        this.addSuccessMessage = function (message, isHtml) {
+            return this.addMessage(message, ALERT_TYPES.SUCCESS, isHtml);
         };
-        this.addWarningMessage = function (message) {
-            return this.addMessage(message, ALERT_TYPES.WARNING);
+        this.addWarningMessage = function (message, isHtml) {
+            return this.addMessage(message, ALERT_TYPES.WARNING, isHtml);
         };
-        this.addInfoMessage = function (message) {
-            return this.addMessage(message, ALERT_TYPES.INFO);
+        this.addInfoMessage = function (message, isHtml) {
+            return this.addMessage(message, ALERT_TYPES.INFO, isHtml);
         };
-        this.addMessage = function (message, type) {
+        this.addMessage = function (message, type, isHtml) {
             var alert = {
                     message: message,
-                    type: type === null ? 'warning' : type
+                    type: type === null ? 'warning' : type,
+                    isHtml: isHtml
                 };
             this.addAlert(alert);
             $('body,html').animate({ scrollTop: $('body').offset().top }, 100);
@@ -2400,7 +2401,7 @@ angular.module("common/views/404.html", []).run(["$templateCache", function($tem
 
 angular.module("common/views/alert.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("common/views/alert.html",
-    "<div ng-hide=\"HeaderService.pageLoadFailure || !securityService.loginStatus.userAllowedToManageCases\"><a style=\"float: right\" ng-show=\"AlertService.alerts.length &gt; 1\" ng-href=\"\" ng-click=\"dismissAlerts()\">{{'Close messages'|translate}}</a><div alert=\"alert\" ng-repeat=\"alert in AlertService.alerts\" type=\"alert.type\" close=\"closeAlert($index)\"><span ng-show=\"alert.type==='info'\" ng-bind-html=\"alert.message\" class=\"icon-innov-prev alert-icon\"></span><span ng-hide=\"alert.type==='info'\">{{alert.message}}</span></div></div>");
+    "<div ng-hide=\"HeaderService.pageLoadFailure || !securityService.loginStatus.userAllowedToManageCases\"><a style=\"float: right\" ng-show=\"AlertService.alerts.length &gt; 1\" ng-href=\"\" ng-click=\"dismissAlerts()\">{{'Close messages'|translate}}</a><div alert=\"alert\" ng-repeat=\"alert in AlertService.alerts\" type=\"alert.type\" close=\"closeAlert($index)\"><span ng-show=\"alert.type==='info' || alert.isHtml\" ng-bind-html=\"alert.message\" class=\"icon-innov-prev alert-icon\"></span><span ng-hide=\"alert.type==='info' || alert.isHtml\">{{alert.message}}</span></div></div>");
 }]);
 
 angular.module("common/views/chatButton.html", []).run(["$templateCache", function($templateCache) {

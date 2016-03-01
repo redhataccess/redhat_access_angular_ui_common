@@ -23,22 +23,23 @@ angular.module('RedhatAccess.header').service('AlertService', [
         this.removeAlert = function (alert) {
             this.alerts.splice(this.alerts.indexOf(alert), 1);
         };
-        this.addDangerMessage = function (message) {
-            return this.addMessage(message, ALERT_TYPES.DANGER);
+        this.addDangerMessage = function (message, isHtml) {
+            return this.addMessage(message, ALERT_TYPES.DANGER, isHtml);
         };
-        this.addSuccessMessage = function (message) {
-            return this.addMessage(message, ALERT_TYPES.SUCCESS);
+        this.addSuccessMessage = function (message, isHtml) {
+            return this.addMessage(message, ALERT_TYPES.SUCCESS, isHtml);
         };
-        this.addWarningMessage = function (message) {
-            return this.addMessage(message, ALERT_TYPES.WARNING);
+        this.addWarningMessage = function (message, isHtml) {
+            return this.addMessage(message, ALERT_TYPES.WARNING, isHtml);
         };
-        this.addInfoMessage = function (message) {
-            return this.addMessage(message, ALERT_TYPES.INFO);
+        this.addInfoMessage = function (message, isHtml) {
+            return this.addMessage(message, ALERT_TYPES.INFO, isHtml);
         };
-        this.addMessage = function (message, type) {
+        this.addMessage = function (message, type, isHtml) {
             var alert = {
                     message: message,
-                    type: type === null ? 'warning' : type
+                    type: type === null ? 'warning' : type,
+                    isHtml: isHtml
                 };
             this.addAlert(alert);
             $('body,html').animate({ scrollTop: $('body').offset().top }, 100);
