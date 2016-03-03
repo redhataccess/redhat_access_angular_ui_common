@@ -34,11 +34,21 @@ angular.module('RedhatAccess.common').factory('udsService', [
                         return  uds.updateCaseDetails(caseNumber,caseDetails);
                     }
                 },
-                associates:{
-                    get:function(userId,roleName){
-                        return uds.fetchCaseAssociateDetails(userId,roleName);
-
+                nep: {
+                    create: function(caseNumber, nep){
+                        return uds.createCaseNep(caseNumber, nep);
                     },
+                    update: function(caseNumber, nep){
+                        return uds.updateCaseNep(caseNumber, nep);
+                    },
+                    remove: function(caseNumber){
+                        return uds.removeCaseNep(caseNumber);
+                    }
+                },
+                associates:{
+                     get:function(uqlContributors){
+                        return uds.fetchCaseAssociateDetails(uqlContributors);
+                     },
                     post:function(caseId,userId,roleName)
                     {
                         var jsonAssociates=
@@ -56,6 +66,23 @@ angular.module('RedhatAccess.common').factory('udsService', [
                             jsonAssociates
                         );
 
+                    },
+                    remove:function(caseId,associateId){
+                        return uds.deleteAssociates(caseId,associateId);
+                    },
+                    update: function(caseId,userId,roleName,associateId){
+                        var jsonAssociates=
+                        {
+                            "resource": {
+                                "associate": {
+                                    "externalModelId": userId
+
+                                },
+                                "role": roleName
+                            },
+                            "externalModelId": associateId
+                        };
+                        return uds.updateCaseAssociate(caseId,jsonAssociates);
                     }
                 },
                 comments: {
@@ -79,11 +106,12 @@ angular.module('RedhatAccess.common').factory('udsService', [
                         }
                     },
                     put: {
-                        private: function (caseNumber, commentText,caseCommentId ) {
+                        private: function (caseNumber, commentText,caseCommentId,draft ) {
                             return uds.postEditPrivateComments(
                                 caseNumber,
                                 commentText,
-                                caseCommentId
+                                caseCommentId,
+                                draft
 
                             );
                         }
@@ -104,6 +132,16 @@ angular.module('RedhatAccess.common').factory('udsService', [
                     remove: function(caseNumber) {
                         return uds.releaselock(caseNumber);
                     }
+                },
+                calls: {
+                    get: function(caseNumber) {
+                        return  uds.getCallLogsForCase(caseNumber);
+                    }
+                },
+                sbt:{
+                    get: function(uql) {
+                        return uds.fetchCases(uql,null,null,null,true);
+                    }
                 }
             },
             account:{
@@ -115,6 +153,22 @@ angular.module('RedhatAccess.common').factory('udsService', [
                 },
                 openCases:function(uql){
                     return uds.getOpenCasesForAccount(uql);
+                },
+                avgCSAT:{
+                    get:function(uql){
+                        return uds.getAvgCSATForAccount(uql);
+                    }
+                },
+                getCaseContacts:function(accountNumber){
+                    return uds.getCaseContactsForAccount(accountNumber);
+                },
+                getCaseGroups: function(contactSSO){
+                    return uds.getCaseGroupsForContact(contactSSO);
+                },
+                rmeCount:{
+                    get:function(uql){
+                        return uds.getRMECountForAccount(uql);
+                    }
                 }
             },
             user:{
@@ -153,9 +207,10 @@ angular.module('RedhatAccess.common').factory('udsService', [
             },
             solution: {
                 details:{
-                    get: function(solutionNumber){
+                    get: function(solutionNumber, resourceProjection){
                         return  uds.getSolutionDetails(
-                            solutionNumber
+                            solutionNumber,
+                            resourceProjection
                         );
                     }
                 },

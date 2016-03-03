@@ -135,6 +135,14 @@ angular.module('RedhatAccess.common').factory('strataService', [
                 }, angular.bind(deferred, errorHandler), max, highlight, highlightTags);
                 return deferred.promise;
             },
+            recommendationsForCase: function (data, limit, start, highlight, highlightTagPre, highlightTagPost) {
+              var deferred = $q.defer();
+                strata.recommendationsForCase(data, function (response) {
+                    deferred.resolve(response);
+                }, angular.bind(deferred, errorHandler), limit, start, highlight, highlightTagPre, highlightTagPost);
+
+                return deferred.promise;
+            },
             solutions: {
                 get: function (uri) {
                     var deferred = $q.defer();
@@ -175,6 +183,18 @@ angular.module('RedhatAccess.common').factory('strataService', [
                         false);
                     return deferred.promise;
 
+                },
+                post: function (solution) {
+                    var deferred = $q.defer();
+                    strata.solutions.post(
+                      solution,
+                      function (solution) {
+                        deferred.resolve(solution);
+                      },
+                      angular.bind(deferred, errorHandler)
+                    );
+
+                    return deferred.promise;
                 }
             },
             search: function (searchString, max) {
@@ -558,6 +578,24 @@ angular.module('RedhatAccess.common').factory('strataService', [
                             deferred.resolve(response);
                         }, angular.bind(deferred, errorHandler));
                         return deferred.promise;
+                    }
+                },
+                symptoms: {
+                    get: function (id) {
+                        var deferred = $q.defer();
+                        strata.cases.symptoms.get(id, function (response) {
+                            deferred.resolve(response);
+                        }, angular.bind(deferred, errorHandler));
+                        return deferred.promise;
+                    },
+                    solutions: {
+                        post: function (limit, isOnlySymptoms, data) {
+                            var deferred = $q.defer();
+                            strata.cases.symptoms.solutions.post(limit, isOnlySymptoms, data, function (response) {
+                                deferred.resolve(response);
+                            }, angular.bind(deferred, errorHandler));
+                            return deferred.promise;
+                        }
                     }
                 },
                 notified_users: {

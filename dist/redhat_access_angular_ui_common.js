@@ -1,4 +1,4 @@
-/*! redhat_access_angular_ui_common - v1.1.10 - 2016-01-13
+/*! redhat_access_angular_ui_common - v1.1.28 - 2016-03-03
  * Copyright (c) 2016 ;
  * Licensed 
  */
@@ -578,12 +578,11 @@ angular.module('RedhatAccess.header').controller('HeaderController', [
     '$scope',
     'AlertService',
     'HeaderService',
-    'CaseService',
     'COMMON_CONFIG',
     'RHAUtils',
     '$interval',
     '$sce',
-    function ($scope, AlertService , HeaderService , CaseService , COMMON_CONFIG , RHAUtils, $interval , $sce) {
+    function ($scope, AlertService , HeaderService , COMMON_CONFIG , RHAUtils, $interval , $sce) {
         /**
        * For some reason the rhaAlert directive's controller is not binding to the view.
        * Hijacking rhaAlert's parent controller (HeaderController) works
@@ -591,7 +590,6 @@ angular.module('RedhatAccess.header').controller('HeaderController', [
        */
         $scope.AlertService = AlertService;
         $scope.HeaderService = HeaderService;
-        $scope.CaseService = CaseService;
         $scope.closeable = true;
         $scope.closeAlert = function (index) {
             AlertService.alerts.splice(index, 1);
@@ -602,7 +600,6 @@ angular.module('RedhatAccess.header').controller('HeaderController', [
         $scope.init = function () {
             HeaderService.pageLoadFailure = false;
             HeaderService.showPartnerEscalationError = false;
-            CaseService.sfdcIsHealthy = COMMON_CONFIG.sfdcIsHealthy;
             HeaderService.sfdcIsHealthy = COMMON_CONFIG.sfdcIsHealthy;
             if (COMMON_CONFIG.doSfdcHealthCheck) {
                 $scope.healthTimer = $interval(HeaderService.checkSfdcHealth, COMMON_CONFIG.healthCheckInterval);
@@ -779,22 +776,23 @@ angular.module('RedhatAccess.header').service('AlertService', [
         this.removeAlert = function (alert) {
             this.alerts.splice(this.alerts.indexOf(alert), 1);
         };
-        this.addDangerMessage = function (message) {
-            return this.addMessage(message, ALERT_TYPES.DANGER);
+        this.addDangerMessage = function (message, isHtml) {
+            return this.addMessage(message, ALERT_TYPES.DANGER, isHtml);
         };
-        this.addSuccessMessage = function (message) {
-            return this.addMessage(message, ALERT_TYPES.SUCCESS);
+        this.addSuccessMessage = function (message, isHtml) {
+            return this.addMessage(message, ALERT_TYPES.SUCCESS, isHtml);
         };
-        this.addWarningMessage = function (message) {
-            return this.addMessage(message, ALERT_TYPES.WARNING);
+        this.addWarningMessage = function (message, isHtml) {
+            return this.addMessage(message, ALERT_TYPES.WARNING, isHtml);
         };
-        this.addInfoMessage = function (message) {
-            return this.addMessage(message, ALERT_TYPES.INFO);
+        this.addInfoMessage = function (message, isHtml) {
+            return this.addMessage(message, ALERT_TYPES.INFO, isHtml);
         };
-        this.addMessage = function (message, type) {
+        this.addMessage = function (message, type, isHtml) {
             var alert = {
                     message: message,
-                    type: type === null ? 'warning' : type
+                    type: type === null ? 'warning' : type,
+                    isHtml: isHtml
                 };
             this.addAlert(alert);
             $('body,html').animate({ scrollTop: $('body').offset().top }, 100);
@@ -932,11 +930,10 @@ angular.module('RedhatAccess.common').service('ConstantsService', [
 angular.module('RedhatAccess.header').factory('HeaderService', [
     'COMMON_CONFIG',
     'strataService',
-    'CaseService',
     'securityService',
     'AlertService',
     '$q',
-    function (COMMON_CONFIG , strataService , CaseService, securityService , AlertService , $q) {
+    function (COMMON_CONFIG , strataService , securityService , AlertService , $q) {
         var service = {
             sfdcIsHealthy: COMMON_CONFIG.sfdcIsHealthy,
             checkSfdcHealth: function() {
@@ -945,13 +942,11 @@ angular.module('RedhatAccess.header').factory('HeaderService', [
                     strataService.health.sfdc().then(angular.bind(this, function (response) {
                         if (response.name === 'SFDC' && response.status === true) {
                             service.sfdcIsHealthy = true;
-                            CaseService.sfdcIsHealthy = true;
                         }
                         deferred.resolve(response);
                     }), angular.bind(this, function (error) {
                         if (error.xhr.status === 502) {
                             service.sfdcIsHealthy = false;
-                            CaseService.sfdcIsHealthy = false;
                         }
                         AlertService.addStrataErrorMessage(error);
                         deferred.reject();
@@ -1105,6 +1100,14 @@ angular.module('RedhatAccess.common').factory('strataService', [
                 }, angular.bind(deferred, errorHandler), max, highlight, highlightTags);
                 return deferred.promise;
             },
+            recommendationsForCase: function (data, limit, start, highlight, highlightTagPre, highlightTagPost) {
+              var deferred = $q.defer();
+                strata.recommendationsForCase(data, function (response) {
+                    deferred.resolve(response);
+                }, angular.bind(deferred, errorHandler), limit, start, highlight, highlightTagPre, highlightTagPost);
+
+                return deferred.promise;
+            },
             solutions: {
                 get: function (uri) {
                     var deferred = $q.defer();
@@ -1145,6 +1148,18 @@ angular.module('RedhatAccess.common').factory('strataService', [
                         false);
                     return deferred.promise;
 
+                },
+                post: function (solution) {
+                    var deferred = $q.defer();
+                    strata.solutions.post(
+                      solution,
+                      function (solution) {
+                        deferred.resolve(solution);
+                      },
+                      angular.bind(deferred, errorHandler)
+                    );
+
+                    return deferred.promise;
                 }
             },
             search: function (searchString, max) {
@@ -1530,6 +1545,24 @@ angular.module('RedhatAccess.common').factory('strataService', [
                         return deferred.promise;
                     }
                 },
+                symptoms: {
+                    get: function (id) {
+                        var deferred = $q.defer();
+                        strata.cases.symptoms.get(id, function (response) {
+                            deferred.resolve(response);
+                        }, angular.bind(deferred, errorHandler));
+                        return deferred.promise;
+                    },
+                    solutions: {
+                        post: function (limit, isOnlySymptoms, data) {
+                            var deferred = $q.defer();
+                            strata.cases.symptoms.solutions.post(limit, isOnlySymptoms, data, function (response) {
+                                deferred.resolve(response);
+                            }, angular.bind(deferred, errorHandler));
+                            return deferred.promise;
+                        }
+                    }
+                },
                 notified_users: {
                     add: function (caseNumber, ssoUserName) {
                         var deferred = $q.defer();
@@ -1857,11 +1890,21 @@ angular.module('RedhatAccess.common').factory('udsService', [
                         return  uds.updateCaseDetails(caseNumber,caseDetails);
                     }
                 },
-                associates:{
-                    get:function(userId,roleName){
-                        return uds.fetchCaseAssociateDetails(userId,roleName);
-
+                nep: {
+                    create: function(caseNumber, nep){
+                        return uds.createCaseNep(caseNumber, nep);
                     },
+                    update: function(caseNumber, nep){
+                        return uds.updateCaseNep(caseNumber, nep);
+                    },
+                    remove: function(caseNumber){
+                        return uds.removeCaseNep(caseNumber);
+                    }
+                },
+                associates:{
+                     get:function(uqlContributors){
+                        return uds.fetchCaseAssociateDetails(uqlContributors);
+                     },
                     post:function(caseId,userId,roleName)
                     {
                         var jsonAssociates=
@@ -1879,6 +1922,23 @@ angular.module('RedhatAccess.common').factory('udsService', [
                             jsonAssociates
                         );
 
+                    },
+                    remove:function(caseId,associateId){
+                        return uds.deleteAssociates(caseId,associateId);
+                    },
+                    update: function(caseId,userId,roleName,associateId){
+                        var jsonAssociates=
+                        {
+                            "resource": {
+                                "associate": {
+                                    "externalModelId": userId
+
+                                },
+                                "role": roleName
+                            },
+                            "externalModelId": associateId
+                        };
+                        return uds.updateCaseAssociate(caseId,jsonAssociates);
                     }
                 },
                 comments: {
@@ -1902,11 +1962,12 @@ angular.module('RedhatAccess.common').factory('udsService', [
                         }
                     },
                     put: {
-                        private: function (caseNumber, commentText,caseCommentId ) {
+                        private: function (caseNumber, commentText,caseCommentId,draft ) {
                             return uds.postEditPrivateComments(
                                 caseNumber,
                                 commentText,
-                                caseCommentId
+                                caseCommentId,
+                                draft
 
                             );
                         }
@@ -1927,6 +1988,16 @@ angular.module('RedhatAccess.common').factory('udsService', [
                     remove: function(caseNumber) {
                         return uds.releaselock(caseNumber);
                     }
+                },
+                calls: {
+                    get: function(caseNumber) {
+                        return  uds.getCallLogsForCase(caseNumber);
+                    }
+                },
+                sbt:{
+                    get: function(uql) {
+                        return uds.fetchCases(uql,null,null,null,true);
+                    }
                 }
             },
             account:{
@@ -1938,6 +2009,22 @@ angular.module('RedhatAccess.common').factory('udsService', [
                 },
                 openCases:function(uql){
                     return uds.getOpenCasesForAccount(uql);
+                },
+                avgCSAT:{
+                    get:function(uql){
+                        return uds.getAvgCSATForAccount(uql);
+                    }
+                },
+                getCaseContacts:function(accountNumber){
+                    return uds.getCaseContactsForAccount(accountNumber);
+                },
+                getCaseGroups: function(contactSSO){
+                    return uds.getCaseGroupsForContact(contactSSO);
+                },
+                rmeCount:{
+                    get:function(uql){
+                        return uds.getRMECountForAccount(uql);
+                    }
                 }
             },
             user:{
@@ -1976,9 +2063,10 @@ angular.module('RedhatAccess.common').factory('udsService', [
             },
             solution: {
                 details:{
-                    get: function(solutionNumber){
+                    get: function(solutionNumber, resourceProjection){
                         return  uds.getSolutionDetails(
-                            solutionNumber
+                            solutionNumber,
+                            resourceProjection
                         );
                     }
                 },
@@ -2325,7 +2413,7 @@ angular.module("common/views/404.html", []).run(["$templateCache", function($tem
 
 angular.module("common/views/alert.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("common/views/alert.html",
-    "<div ng-hide=\"HeaderService.pageLoadFailure || !securityService.loginStatus.userAllowedToManageCases\"><a style=\"float: right\" ng-show=\"AlertService.alerts.length &gt; 1\" ng-href=\"\" ng-click=\"dismissAlerts()\">{{'Close messages'|translate}}</a><div alert=\"alert\" ng-repeat=\"alert in AlertService.alerts\" type=\"alert.type\" close=\"closeAlert($index)\"><span ng-show=\"alert.type==='info'\" ng-bind-html=\"alert.message\" class=\"icon-innov-prev alert-icon\"></span><span ng-hide=\"alert.type==='info'\">{{alert.message}}</span></div></div>");
+    "<div ng-hide=\"HeaderService.pageLoadFailure || !securityService.loginStatus.userAllowedToManageCases\"><a style=\"float: right\" ng-show=\"AlertService.alerts.length &gt; 1\" ng-href=\"\" ng-click=\"dismissAlerts()\">{{'Close messages'|translate}}</a><div alert=\"alert\" ng-repeat=\"alert in AlertService.alerts\" type=\"alert.type\" close=\"closeAlert($index)\"><span ng-show=\"alert.type==='info' || alert.isHtml\" ng-bind-html=\"alert.message\" class=\"icon-innov-prev alert-icon\"></span><span ng-hide=\"alert.type==='info' || alert.isHtml\">{{alert.message}}</span></div></div>");
 }]);
 
 angular.module("common/views/chatButton.html", []).run(["$templateCache", function($templateCache) {
@@ -2335,7 +2423,7 @@ angular.module("common/views/chatButton.html", []).run(["$templateCache", functi
 
 angular.module("common/views/header.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("common/views/header.html",
-    "<div rha-403error=\"\"></div><div rha-404error=\"\"></div><div ng-show=\"HeaderService.sfdcIsHealthy\"></div><div rha-alert=\"\"></div><div ng-hide=\"failedToLoadCase || !securityService.loginStatus.userAllowedToManageCases\"><div ng-show=\"pageLoading\" class=\"spinner spinner-inline\"></div></div><div ng-hide=\"HeaderService.pageLoadFailure || !securityService.loginStatus.userAllowedToManageCases\" class=\"page-header\"><div ng-hide=\"page ===&quot;&quot;\" rha-titletemplate=\"\" page=\"{{page}}\"></div><div ng-show=\"page === &quot;caseView&quot;\">Filed on&nbsp;</div><div ng-show=\"securityService.loginStatus.isLoggedIn &amp;&amp; securityService.loginStatus.authedUser.has_chat &amp;&amp; CaseService.sfdcIsHealthy\" rha-chatbutton=\"\"></div></div><div rha-loginstatus=\"\"></div><div ng-show=\"!HeaderService.sfdcIsHealthy\" ng-bind-html=\"parseSfdcOutageHtml()\"></div>");
+    "<div rha-403error=\"\"></div><div rha-404error=\"\"></div><div ng-show=\"HeaderService.sfdcIsHealthy\"></div><div rha-alert=\"\"></div><div ng-hide=\"failedToLoadCase || !securityService.loginStatus.userAllowedToManageCases\"><div ng-show=\"pageLoading\" class=\"spinner spinner-inline\"></div></div><div ng-hide=\"HeaderService.pageLoadFailure || !securityService.loginStatus.userAllowedToManageCases\" class=\"page-header\"><div ng-hide=\"page ===&quot;&quot;\" rha-titletemplate=\"\" page=\"{{page}}\"></div><div ng-show=\"page === &quot;caseView&quot;\">Filed on&nbsp;</div><div ng-show=\"securityService.loginStatus.isLoggedIn &amp;&amp; securityService.loginStatus.authedUser.has_chat &amp;&amp; HeaderService.sfdcIsHealthy\" rha-chatbutton=\"\"></div></div><div rha-loginstatus=\"\"></div><div ng-show=\"!HeaderService.sfdcIsHealthy\" ng-bind-html=\"parseSfdcOutageHtml()\"></div>");
 }]);
 
 angular.module("common/views/title.html", []).run(["$templateCache", function($templateCache) {
