@@ -124,6 +124,11 @@ angular.module('RedhatAccess.common').factory('udsService', [
 
                     }
                 },
+                resourceLinks:{
+                    get: function(solutionIdQuery) {
+                        return  uds.fetchSolutionDetails(solutionIdQuery);
+                    }
+                },
                 lock: {
                     get: function(caseNumber) {
                         return  uds.getlock(caseNumber);
