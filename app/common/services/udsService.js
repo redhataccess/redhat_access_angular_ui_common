@@ -284,6 +284,15 @@ angular.module('RedhatAccess.common').factory('udsService', [
                         );
                     }
                 }
+            },
+            solr: {
+              get: function (query) {
+                return uds.fetchSolr(query).then(function (response) {
+                  if(typeof response === 'string') return JSON.parse(response);
+
+                  return response;
+                });
+              }
             }
         };
         return service;
