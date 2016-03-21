@@ -1,4 +1,4 @@
-/*! redhat_access_angular_ui_common - v1.1.29 - 2016-03-16
+/*! redhat_access_angular_ui_common - v1.1.31 - 2016-03-21
  * Copyright (c) 2016 ;
  * Licensed 
  */
@@ -2135,6 +2135,15 @@ angular.module('RedhatAccess.common').factory('udsService', [
                         );
                     }
                 }
+            },
+            solr: {
+              get: function (query) {
+                return uds.fetchSolr(query).then(function (response) {
+                  if(typeof response === 'string') return JSON.parse(response);
+
+                  return response;
+                });
+              }
             }
         };
         return service;
