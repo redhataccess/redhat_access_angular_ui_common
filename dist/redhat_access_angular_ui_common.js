@@ -1,4 +1,4 @@
-/*! redhat_access_angular_ui_common - v1.1.31 - 2016-03-21
+/*! redhat_access_angular_ui_common - v1.1.32 - 2016-03-21
  * Copyright (c) 2016 ;
  * Licensed 
  */
@@ -2007,6 +2007,14 @@ angular.module('RedhatAccess.common').factory('udsService', [
                 sbt:{
                     get: function(uql) {
                         return uds.fetchCases(uql,null,null,null,true);
+                    }
+                },
+                sbrs:{
+                    add: function(caseNumber,sbrArray){
+                        return uds.addCaseSbrs(caseNumber,sbrArray);
+                    },
+                    remove: function(caseNumber,sbrArray){
+                        return uds.removeCaseSbrs(caseNumber,sbrArray);
                     }
                 }
             },
