@@ -1,4 +1,4 @@
-/*! redhat_access_angular_ui_common - v1.1.29 - 2016-03-16
+/*! redhat_access_angular_ui_common - v1.1.30 - 2016-03-18
  * Copyright (c) 2016 ;
  * Licensed 
  */
@@ -1881,6 +1881,11 @@ angular.module('RedhatAccess.common').factory('udsService', [
                 }
             },
             kase:{
+                handlingSystem:{
+                    set : function(caseNumber,handlingSystemArray){
+                        return uds.setHandlingSystem(caseNumber,handlingSystemArray);
+                    }
+                },
                 details: {
                     get: function(caseNumber) {
                         return uds.fetchCaseDetails(caseNumber);
