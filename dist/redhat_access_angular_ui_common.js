@@ -1881,6 +1881,11 @@ angular.module('RedhatAccess.common').factory('udsService', [
                 }
             },
             kase:{
+                handlingSystem:{
+                    set : function(caseNumber,handlingSystemArray){
+                        return uds.setHandlingSystem(caseNumber,handlingSystemArray);
+                    }
+                },
                 details: {
                     get: function(caseNumber) {
                         return uds.fetchCaseDetails(caseNumber);
