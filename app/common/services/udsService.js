@@ -152,6 +152,14 @@ angular.module('RedhatAccess.common').factory('udsService', [
                     get: function(uql) {
                         return uds.fetchCases(uql,null,null,null,true);
                     }
+                },
+                sbrs:{
+                    add: function(caseNumber,sbrArray){
+                        return uds.addCaseSbrs(caseNumber,sbrArray);
+                    },
+                    remove: function(caseNumber,sbrArray){
+                        return uds.removeCaseSbrs(caseNumber,sbrArray);
+                    }
                 }
             },
             account:{
