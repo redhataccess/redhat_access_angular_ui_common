@@ -275,6 +275,18 @@ angular.module('RedhatAccess.common').factory('udsService', [
                    return uds.getRoleList(query
                     );
                 },
+                listAllRoles: function(query) {
+                    return uds.getAllRolesList(query);
+                },
+                createRole: function(roleDetails){
+                    return uds.createRole(roleDetails);
+                },
+                updateRole: function(roleId,rolePayload){
+                    return uds.updateRole(roleId,rolePayload);
+                },
+                deleteRole: function(roleId){
+                    return uds.deleteRole(roleId);
+                },
                 removeUserRole: function(userId,query){
                    return uds.removeUserRole(userId,
                         query
