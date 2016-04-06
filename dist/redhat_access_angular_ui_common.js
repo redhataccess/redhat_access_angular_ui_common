@@ -1,4 +1,4 @@
-/*! redhat_access_angular_ui_common - v1.1.32 - 2016-03-21
+/*! redhat_access_angular_ui_common - v1.1.33 - 2016-04-06
  * Copyright (c) 2016 ;
  * Licensed 
  */
@@ -2130,6 +2130,18 @@ angular.module('RedhatAccess.common').factory('udsService', [
                 list: function(query) {
                    return uds.getRoleList(query
                     );
+                },
+                listAllRoles: function(query) {
+                    return uds.getAllRolesList(query);
+                },
+                createRole: function(roleDetails){
+                    return uds.createRole(roleDetails);
+                },
+                updateRole: function(roleId,rolePayload){
+                    return uds.updateRole(roleId,rolePayload);
+                },
+                deleteRole: function(roleId){
+                    return uds.deleteRole(roleId);
                 },
                 removeUserRole: function(userId,query){
                    return uds.removeUserRole(userId,
