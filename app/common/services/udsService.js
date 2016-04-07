@@ -160,6 +160,17 @@ angular.module('RedhatAccess.common').factory('udsService', [
                     remove: function(caseNumber,sbrArray){
                         return uds.removeCaseSbrs(caseNumber,sbrArray);
                     }
+                },
+                additionalContacts: {
+                    get: function(caseNumber) {
+                        return  uds.getAdditionalContacts(caseNumber);
+                    },
+                    remove: function(caseNumber,contacts){
+                        return uds.removeAdditionalContacts(caseNumber,contacts);
+                    },
+                    put: function(caseNumber,contacts){
+                        return uds.addAdditionalContacts(caseNumber,contacts);
+                    }
                 }
             },
             account:{
