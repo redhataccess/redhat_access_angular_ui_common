@@ -1,4 +1,4 @@
-/*! redhat_access_angular_ui_common - v1.1.34 - 2016-04-07
+/*! redhat_access_angular_ui_common - v1.1.35 - 2016-04-11
  * Copyright (c) 2016 ;
  * Licensed 
  */
@@ -2033,6 +2033,17 @@ angular.module('RedhatAccess.common').factory('udsService', [
                     },
                     remove: function(caseNumber,sbrArray){
                         return uds.removeCaseSbrs(caseNumber,sbrArray);
+                    }
+                },
+                additionalContacts: {
+                    get: function(caseNumber) {
+                        return  uds.getAdditionalContacts(caseNumber);
+                    },
+                    remove: function(caseNumber,contacts){
+                        return uds.removeAdditionalContacts(caseNumber,contacts);
+                    },
+                    put: function(caseNumber,contacts){
+                        return uds.addAdditionalContacts(caseNumber,contacts);
                     }
                 }
             },
