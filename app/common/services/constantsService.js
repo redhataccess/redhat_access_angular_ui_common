@@ -83,5 +83,23 @@ angular.module('RedhatAccess.common').service('ConstantsService', [
                 value: STATUS.closed
             }
         ];
+
+
+        this.wappsUrl = new Uri('https://ams-dev2.devlab.redhat.com/wapps');
+        if (window.location.hostname === 'access.redhat.com' || window.location.hostname === 'prod.foo.redhat.com' || window.location.hostname === 'fooprod.redhat.com'){
+            this.wappsUrl = new Uri('https://www.redhat.com/wapps');
+        }
+        else
+        {
+            if (window.location.hostname === 'access.qa.redhat.com' || window.location.hostname === 'qa.foo.redhat.com' || window.location.hostname === 'fooqa.redhat.com') {
+                this.wappsUrl = new Uri('https://www.qa.redhat.com/wapps');
+            }
+            else
+            {
+                if (window.location.hostname === 'access.devgssci.devlab.phx1.redhat.com' || window.location.hostname === 'ci.foo.redhat.com' || window.location.hostname === 'fooci.redhat.com') {
+                    this.wappsUrl = new Uri('https://ams-dev2.devlab.redhat.com/wapps');
+                }
+            }
+        }
     }
 ]);
