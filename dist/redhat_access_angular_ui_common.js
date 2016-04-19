@@ -1,4 +1,4 @@
-/*! redhat_access_angular_ui_common - v1.1.35 - 2016-04-12
+/*! redhat_access_angular_ui_common - v1.1.36 - 2016-04-19
  * Copyright (c) 2016 ;
  * Licensed 
  */
