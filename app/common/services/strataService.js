@@ -662,7 +662,7 @@ angular.module('RedhatAccess.common').factory('strataService', [
                     }, angular.bind(deferred, errorHandler), caseStatus, caseOwner, caseGroup, accountNumber, searchString, sortField, sortOrder, offset, limit, queryParams);
                     return deferred.promise;
                 },
-                advancedSearch: function (query) {
+                advancedSearch: function (query, order,  offset, limit) {
                     var deferred = $q.defer();
                     strata.cases.advancedSearch(function (response) {
                         angular.forEach(response['case'], angular.bind(this, function (kase) {
@@ -672,7 +672,7 @@ angular.module('RedhatAccess.common').factory('strataService', [
                            kase.last_modified_date=RHAUtils.formatDate(modifiedDate,'MMM DD YYYY');
                         }));
                         deferred.resolve(response);
-                    }, angular.bind(deferred, errorHandler), query);
+                    }, angular.bind(deferred, errorHandler), query, order, offset, limit);
 
                     return deferred.promise;
                 },

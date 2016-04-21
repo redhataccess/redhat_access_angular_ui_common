@@ -1,4 +1,4 @@
-/*! redhat_access_angular_ui_common - v1.1.36 - 2016-04-19
+/*! redhat_access_angular_ui_common - v1.1.37 - 2016-04-21
  * Copyright (c) 2016 ;
  * Licensed 
  */
@@ -1645,7 +1645,7 @@ angular.module('RedhatAccess.common').factory('strataService', [
                     }, angular.bind(deferred, errorHandler), caseStatus, caseOwner, caseGroup, accountNumber, searchString, sortField, sortOrder, offset, limit, queryParams);
                     return deferred.promise;
                 },
-                advancedSearch: function (query) {
+                advancedSearch: function (query, order,  offset, limit) {
                     var deferred = $q.defer();
                     strata.cases.advancedSearch(function (response) {
                         angular.forEach(response['case'], angular.bind(this, function (kase) {
@@ -1655,7 +1655,7 @@ angular.module('RedhatAccess.common').factory('strataService', [
                            kase.last_modified_date=RHAUtils.formatDate(modifiedDate,'MMM DD YYYY');
                         }));
                         deferred.resolve(response);
-                    }, angular.bind(deferred, errorHandler), query);
+                    }, angular.bind(deferred, errorHandler), query, order, offset, limit);
 
                     return deferred.promise;
                 },
