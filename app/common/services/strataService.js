@@ -208,32 +208,23 @@ angular.module('RedhatAccess.common').factory('strataService', [
                             entries.forEach(function (entry) {
                                 var deferred = $q.defer();
                                 deferreds.push(deferred.promise);
-                                var cacheMiss = true;
-                                if (entry.resource_type === RESOURCE_TYPES.solution) {
-                                    if (!ie8 && strataCache.get('solution' + entry.uri)) {
-                                        deferred.resolve(strataCache.get('solution' + entry.uri));
-                                        cacheMiss = false;
-                                    }
-
-                                }
-                                // else if (entry.resource_type === RESOURCE_TYPES.article) {
-                                //     if (strataCache.get('article' + entry.uri)) {
-                                //         deferred.resolve(strataCache.get('article' + entry.uri));
-                                //         cacheMiss = false;
-                                //     }
-                                // }
-                                if (cacheMiss) {
-                                    strata.utils.getURI(entry.uri, entry.resource_type, function (type, info) {
-                                        if (info !== undefined) {
-                                            info.resource_type = type;
-                                            if (!ie8 && (type === RESOURCE_TYPES.solution)) {
-                                                strataCache.put('solution' + entry.uri, info);
-                                            }
+                                var resourceType = entry.resource_type || entry.documentKind;
+                                switch (resourceType) {
+                                    case RESOURCE_TYPES.solution:
+                                        if (!strataCache.get('solution' + entry.uri)) {
+                                            strataCache.put('solution' + entry.uri, entry);
                                         }
-                                        deferred.resolve(info);
-                                    }, function (error) {
-                                        deferred.resolve();
-                                    });
+                                        deferred.resolve(strataCache.get('solution' + entry.uri));
+                                        break;
+                                    case RESOURCE_TYPES.article:
+                                        if (!strataCache.get('article' + entry.uri)) {
+                                            strataCache.put('article' + entry.uri, entry);
+                                        }
+                                        deferred.resolve(strataCache.get('article' + entry.uri));
+                                        break;
+                                    default:
+                                        console.warn("Could not determine resource type from strata search, resourceType: " + resourceType + ", q: " + searchString);
+                                        return deferred.resolve();
                                 }
                             });
                         }
