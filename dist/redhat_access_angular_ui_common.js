@@ -1,4 +1,4 @@
-/*! redhat_access_angular_ui_common - v1.1.39 - 2016-04-27
+/*! redhat_access_angular_ui_common - v1.1.40 - 2016-04-27
  * Copyright (c) 2016 ;
  * Licensed 
  */
@@ -1898,6 +1898,14 @@ angular.module('RedhatAccess.common').factory('udsService', [
                 },
                 sbrs: function(){
                     return  uds.fetchCaseSbrs();
+                },
+                brmsSolrQuery: {
+                    get : function(jsonObject){
+                        return uds.fetchBrmsSolrQuery(jsonObject);
+                    }
+                },
+                listTopCases: function(queryString){
+                    return  uds.fetchTopCasesFromSolr(queryString);
                 }
             },
             bomgar: {
