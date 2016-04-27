@@ -17,6 +17,14 @@ angular.module('RedhatAccess.common').factory('udsService', [
                 },
                 sbrs: function(){
                     return  uds.fetchCaseSbrs();
+                },
+                brmsSolrQuery: {
+                    get : function(jsonObject){
+                        return uds.fetchBrmsSolrQuery(jsonObject);
+                    }
+                },
+                listTopCases: function(queryString){
+                    return  uds.fetchTopCasesFromSolr(queryString);
                 }
             },
             bomgar: {
