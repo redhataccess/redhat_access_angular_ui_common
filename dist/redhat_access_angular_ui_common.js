@@ -1,4 +1,4 @@
-/*! redhat_access_angular_ui_common - v1.1.38 - 2016-04-26
+/*! redhat_access_angular_ui_common - v1.1.39 - 2016-04-27
  * Copyright (c) 2016 ;
  * Licensed 
  */
@@ -1388,6 +1388,22 @@ angular.module('RedhatAccess.common').factory('strataService', [
                             deferred.resolve(response);
                         }, angular.bind(deferred, errorHandler));
                     }
+                    return deferred.promise;
+                },
+                addBookmark: function (accountNumber, ssoName) {
+                    var deferred = $q.defer();
+                    strata.accounts.addBookmark(accountNumber, ssoName, function () {
+                        deferred.resolve();
+                    }, angular.bind(deferred, errorHandler));
+
+                    return deferred.promise;
+                },
+                removeBookmark: function (accountNumber, ssoName) {
+                    var deferred = $q.defer();
+                    strata.accounts.removeBookmark(accountNumber, ssoName, function () {
+                        deferred.resolve();
+                    }, angular.bind(this, errorHandler));
+
                     return deferred.promise;
                 }
             },
