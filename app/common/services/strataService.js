@@ -406,6 +406,22 @@ angular.module('RedhatAccess.common').factory('strataService', [
                         }, angular.bind(deferred, errorHandler));
                     }
                     return deferred.promise;
+                },
+                addBookmark: function (accountNumber, ssoName) {
+                    var deferred = $q.defer();
+                    strata.accounts.addBookmark(accountNumber, ssoName, function () {
+                        deferred.resolve();
+                    }, angular.bind(deferred, errorHandler));
+
+                    return deferred.promise;
+                },
+                removeBookmark: function (accountNumber, ssoName) {
+                    var deferred = $q.defer();
+                    strata.accounts.removeBookmark(accountNumber, ssoName, function () {
+                        deferred.resolve();
+                    }, angular.bind(this, errorHandler));
+
+                    return deferred.promise;
                 }
             },
             cases: {
