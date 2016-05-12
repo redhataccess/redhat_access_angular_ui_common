@@ -294,6 +294,9 @@ angular.module('RedhatAccess.common').factory('udsService', [
                    return uds.getRoleList(query
                     );
                 },
+                roleDetails : function(roleId){
+                    return uds.getRoleDetails(roleId);
+                },
                 listAllRoles: function(query) {
                     return uds.getAllRolesList(query);
                 },
