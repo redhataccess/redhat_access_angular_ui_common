@@ -197,6 +197,25 @@ angular.module('RedhatAccess.common').factory('strataService', [
                     return deferred.promise;
                 }
             },
+            articles: {
+                get: function (uri) {
+                    var deferred = $q.defer();
+                    var splitUri = uri.split('/');
+                    uri = splitUri[splitUri.length - 1];
+                    if (!ie8 && strataCache.get('article' + uri)) {
+                        deferred.resolve(strataCache.get('article' + uri));
+                    } else {
+                        strata.articles.get(uri, function (article) {
+                            article.resource_type = RESOURCE_TYPES.article; //Needed upstream
+                            strataCache.put('article' + uri, article);
+                            deferred.resolve(article);
+                        }, function () {
+                            deferred.resolve();
+                        });
+                    }
+                    return deferred.promise;
+                }
+            },
             search: function (searchString, max) {
                 var resultsDeferred = $q.defer();
                 var deferreds = [];
