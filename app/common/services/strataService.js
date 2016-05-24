@@ -197,6 +197,17 @@ angular.module('RedhatAccess.common').factory('strataService', [
                     return deferred.promise;
                 }
             },
+            articles: {
+                get: function (id) {
+                    var deferred = $q.defer();
+                    strata.articles.get(id, function (article) {
+                        article.resource_type = RESOURCE_TYPES.article; //Needed upstream
+                        strataCache.put('article' + id, article);
+                        deferred.resolve(article);
+                    }, angular.bind(deferred, errorHandler));
+                    return deferred.promise;
+                }
+            },
             search: function (searchString, max) {
                 var resultsDeferred = $q.defer();
                 var deferreds = [];
