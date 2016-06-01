@@ -1,4 +1,4 @@
-/*! redhat_access_angular_ui_common - v1.1.43 - 2016-05-25
+/*! redhat_access_angular_ui_common - v1.1.44 - 2016-06-01
  * Copyright (c) 2016 ;
  * Licensed 
  */
@@ -2071,6 +2071,14 @@ angular.module('RedhatAccess.common').factory('udsService', [
                     put: function(caseNumber,contacts){
                         return uds.addAdditionalContacts(caseNumber,contacts);
                     }
+                }
+            },
+            // This is not to be confused with kase.comments.  This top level comments object allows you to query
+            // /case/comments with custom UQL
+            comments: {
+                get: function (uql) {
+                    return uds.fetchComments(uql);
+
                 }
             },
             account:{
