@@ -22,7 +22,6 @@ Then before pushing your remote branch always rebase to upstream master
     git checkout <branch>
     git rebase master
 
-
 Then verify that everything is still working as you expect it to, test in the browser, then push your remote branch
 
     git push origin <branch name>

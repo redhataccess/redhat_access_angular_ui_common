@@ -181,6 +181,14 @@ angular.module('RedhatAccess.common').factory('udsService', [
                     }
                 }
             },
+            // This is not to be confused with kase.comments.  This top level comments object allows you to query
+            // /case/comments with custom UQL
+            comments: {
+                get: function (uql) {
+                    return uds.fetchComments(uql);
+
+                }
+            },
             account:{
                 get:function(accountNumber){
                     return uds.fetchAccountDetails(accountNumber);
